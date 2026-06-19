@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ways To Read — The Voltage Corridor | Rahway / Woodbridge / Edison</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+
+  :root{
+    --void:#06080c;
+    --ink:#f2efe9;
+    --soft:#d4d0c8;
+    --muted:#8a8a9a;
+    --dim:#505060;
+    --line:rgba(255,255,255,.07);
+    --card:rgba(255,255,255,.032);
+
+    --eco:#7c3aed;
+    --mob:#e11d6a;
+    --tem:#ea7e00;
+    --cul:#0ea5e9;
+    --inv:#10b981;
+
+    --anchor:#f2efe9;
+
+    /* node colors for the three circuit towns */
+    --node-rahway:#34d399;
+    --node-woodbridge:#fb923c;
+    --node-edison:#818cf8;
+  }
+
+  @keyframes prisma-drift{
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+  }
+  @keyframes fade-up{
+    from{opacity:0;transform:translateY(22px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+  @keyframes bar-in{
+    from{transform:scaleX(0)}
+    to{transform:scaleX(1)}
+  }
+  @keyframes pulse-line{
+    0%,100%{opacity:.35}
+    50%{opacity:.9}
+  }
+
+  html{font-size:18px}
+
+  body{
+    background:var(--void);
+    color:var(--ink);
+    font-family:'DM Sans', sans-serif;
+    font-weight:400;
+    line-height:1.7;
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+
+  /* ── AMBIENT GLOW ── */
+  .ambient{
+    position:fixed;top:0;left:0;width:100%;height:100%;
+    pointer-events:none;z-index:0;
+    background:
+      radial-gradient(ellipse 50% 32% at 10% 12%, rgba(52,211,153,.11) 0%, transparent 62%),
+      radial-gradient(ellipse 42% 30% at 50% 50%, rgba(251,146,60,.10) 0%, transparent 62%),
+      radial-gradient(ellipse 45% 32% at 88% 85%, rgba(129,140,248,.11) 0%, transparent 62%);
+    animation:prisma-drift 22s ease-in-out infinite;
+    background-size:250% 250%;
+  }
+
+  /* ── HEADER ── */
+  header{
+    position:relative;z-index:10;
+    padding:72px 28px 48px;
+    text-align:center;
+    border-bottom:1px solid var(--line);
+    animation:fade-up .8s ease both;
+  }
+
+  .eyebrow{
+    font-size:.72rem;
+    font-weight:600;
+    letter-spacing:.25em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-bottom:24px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+  }
+  .eyebrow::before,.eyebrow::after{
+    content:'';width:36px;height:1px;
+    background:var(--dim);
+  }
+
+  h1{
+    font-family:'Bebas Neue', sans-serif;
+    font-size:clamp(3.4rem,9vw,7rem);
+    line-height:.92;
+    letter-spacing:.02em;
+    background:linear-gradient(120deg,
+      var(--node-rahway) 0%,
+      #ffffff 35%,
+      var(--node-woodbridge) 65%,
+      var(--node-edison) 100%);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+    background-size:220% 220%;
+    animation:prisma-drift 14s ease-in-out infinite;
+    margin-bottom:18px;
+  }
+
+  .circuit-id{
+    font-family:'DM Mono', monospace;
+    font-size:.78rem;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:rgba(242,239,233,.4);
+    margin-bottom:28px;
+  }
+
+  .header-intro{
+    font-size:1.15rem;
+    font-weight:300;
+    color:var(--soft);
+    max-width:660px;
+    margin:0 auto;
+    line-height:1.75;
+    letter-spacing:.01em;
+  }
+
+  /* ── METHOD STRIP ── */
+  .method-strip{
+    position:relative;z-index:10;
+    max-width:900px;
+    margin:36px auto 0;
+    padding:0 28px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+    animation:fade-up .85s .05s ease both;
+  }
+
+  .method-step{
+    font-family:'DM Mono', monospace;
+    font-size:.68rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--muted);
+    padding:7px 14px;
+    border:1px solid var(--line);
+    border-radius:20px;
+  }
+
+  .method-step.active{
+    color:var(--anchor);
+    border-color:rgba(242,239,233,.28);
+  }
+
+  .method-arrow{
+    color:var(--dim);
+    font-size:.75rem;
+  }
+
+  /* ── NODE MAP (three-node circuit diagram) ── */
+  .node-map{
+    position:relative;z-index:10;
+    max-width:900px;
+    margin:48px auto 0;
+    padding:0 28px;
+    animation:fade-up .9s .1s ease both;
+  }
+
+  .node-map-inner{
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:40px 36px;
+    background:rgba(255,255,255,.018);
+  }
+
+  .node-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+  }
+
+  .node-stop{
+    flex:0 0 auto;
+    text-align:center;
+    min-width:104px;
+  }
+
+  .node-marker{
+    width:14px;height:14px;
+    border-radius:50%;
+    margin:0 auto 14px;
+  }
+
+  .node-marker.n1{background:var(--node-rahway); box-shadow:0 0 16px var(--node-rahway);}
+  .node-marker.n2{background:var(--node-woodbridge); box-shadow:0 0 16px var(--node-woodbridge);}
+  .node-marker.n3{background:var(--node-edison); box-shadow:0 0 16px var(--node-edison);}
+
+  .node-stop-name{
+    font-family:'Bebas Neue', sans-serif;
+    font-size:1.6rem;
+    letter-spacing:.04em;
+    line-height:1;
+    margin-bottom:6px;
+  }
+
+  .node-stop-role{
+    font-family:'DM Mono', monospace;
+    font-size:.62rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--dim);
+  }
+
+  .node-connector{
+    flex:1 1 auto;
+    height:1px;
+    background:linear-gradient(90deg, transparent, var(--dim), transparent);
+    position:relative;
+    top:-24px;
+    min-width:30px;
+    animation:pulse-line 3.5s ease-in-out infinite;
+  }
+
+  @media(max-width:640px){
+    .node-row{flex-direction:column; gap:28px;}
+    .node-connector{display:none;}
+  }
+
+  /* ── OBSERVED CONFIGURATION ── */
+  .cluster-bar{
+    position:relative;z-index:10;
+    max-width:900px;
+    margin:32px auto 0;
+    padding:0 28px;
+    animation:fade-up .95s .12s ease both;
+  }
+
+  .cluster-inner{
+    background:rgba(242,239,233,.035);
+    border:1px solid rgba(242,239,233,.14);
+    border-radius:14px;
+    padding:32px 36px;
+    position:relative;
+    overflow:hidden;
+  }
+
+  .cluster-inner::before{
+    content:'';
+    position:absolute;
+    top:0;left:0;right:0;height:2px;
+    background:linear-gradient(90deg, var(--node-rahway), var(--node-woodbridge), var(--node-edison));
+    transform-origin:left;
+    animation:bar-in 1.2s .5s ease both;
+  }
+
+  .cluster-label{
+    font-family:'DM Mono', monospace;
+    font-size:.66rem;
+    font-weight:500;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--anchor);
+    margin-bottom:6px;
+    opacity:.85;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+
+  .cluster-label .pin{
+    width:6px;height:6px;border-radius:50%;
+    background:var(--anchor);
+    box-shadow:0 0 8px var(--anchor);
+    flex-shrink:0;
+  }
+
+  .cluster-sublabel{
+    font-size:.78rem;
+    color:var(--dim);
+    margin-bottom:20px;
+    letter-spacing:.02em;
+  }
+
+  .cluster-statement{
+    font-size:1.18rem;
+    font-weight:400;
+    color:var(--ink);
+    line-height:1.7;
+    max-width:720px;
+  }
+
+  .cluster-nodes{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:22px;
+  }
+
+  .node-tag{
+    font-size:.72rem;
+    font-weight:600;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    padding:6px 14px;
+    border-radius:20px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.1);
+    color:var(--soft);
+  }
+
+  .cluster-verify{
+    margin-top:22px;
+    padding-top:18px;
+    border-top:1px solid var(--line);
+    font-family:'DM Mono', monospace;
+    font-size:.74rem;
+    color:var(--dim);
+    letter-spacing:.03em;
+    line-height:1.6;
+  }
+
+  /* ── TRANSITION LABEL ── */
+  .transition-label{
+    position:relative;z-index:10;
+    max-width:900px;
+    margin:48px auto 0;
+    padding:0 28px;
+    display:flex;
+    align-items:center;
+    gap:16px;
+    animation:fade-up 1s .15s ease both;
+  }
+
+  .transition-label .rule{
+    flex:1;
+    height:1px;
+    background:var(--line);
+  }
+
+  .transition-label .label-text{
+    font-family:'DM Mono', monospace;
+    font-size:.7rem;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--muted);
+    white-space:nowrap;
+  }
+
+  /* ── FIELD READINGS ── */
+  .readings{
+    position:relative;z-index:10;
+    max-width:900px;
+    margin:28px auto 0;
+    padding:0 28px;
+    display:flex;
+    flex-direction:column;
+    gap:28px;
+    animation:fade-up 1s .2s ease both;
+  }
+
+  .lens-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:36px 36px 32px;
+    position:relative;
+    overflow:hidden;
+    transition:transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+  }
+
+  .lens-card:hover{
+    transform:translateY(-3px);
+    border-color:rgba(255,255,255,.14);
+  }
+
+  .lens-card::before{
+    content:'';
+    position:absolute;
+    top:0;left:0;bottom:0;width:3px;
+    border-radius:14px 0 0 14px;
+  }
+
+  .lens-card.eco::before{background:linear-gradient(180deg,var(--eco),#a78bfa)}
+  .lens-card.mob::before{background:linear-gradient(180deg,var(--mob),#f472b6)}
+  .lens-card.tem::before{background:linear-gradient(180deg,var(--tem),#fbbf24)}
+  .lens-card.cul::before{background:linear-gradient(180deg,var(--cul),#818cf8)}
+  .lens-card.inv::before{background:linear-gradient(180deg,var(--inv),#34d399)}
+
+  .lens-card.eco:hover{box-shadow:0 8px 48px rgba(124,58,237,.12)}
+  .lens-card.mob:hover{box-shadow:0 8px 48px rgba(225,29,106,.10)}
+  .lens-card.tem:hover{box-shadow:0 8px 48px rgba(234,126,0,.10)}
+  .lens-card.cul:hover{box-shadow:0 8px 48px rgba(14,165,233,.10)}
+  .lens-card.inv:hover{box-shadow:0 8px 48px rgba(16,185,129,.10)}
+
+  .lens-meta{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:18px;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+
+  .lens-meta-left{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+
+  .lens-dot{
+    width:7px;height:7px;border-radius:50%;flex-shrink:0;
+  }
+  .eco .lens-dot{background:var(--eco);box-shadow:0 0 8px var(--eco)}
+  .mob .lens-dot{background:var(--mob);box-shadow:0 0 8px var(--mob)}
+  .tem .lens-dot{background:var(--tem);box-shadow:0 0 8px var(--tem)}
+  .cul .lens-dot{background:var(--cul);box-shadow:0 0 8px var(--cul)}
+  .inv .lens-dot{background:var(--inv);box-shadow:0 0 8px var(--inv)}
+
+  .lens-name{
+    font-size:.72rem;
+    font-weight:700;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+  }
+  .eco .lens-name{color:var(--eco)}
+  .mob .lens-name{color:var(--mob)}
+  .tem .lens-name{color:var(--tem)}
+  .cul .lens-name{color:var(--cul)}
+  .inv .lens-name{color:var(--inv)}
+
+  .reading-tag{
+    font-family:'DM Mono', monospace;
+    font-size:.64rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--dim);
+    padding:3px 10px;
+    border:1px solid var(--line);
+    border-radius:20px;
+  }
+
+  .lens-card h2{
+    font-family:'Bebas Neue', sans-serif;
+    font-size:2rem;
+    letter-spacing:.06em;
+    line-height:1;
+    color:var(--ink);
+    margin-bottom:18px;
+  }
+
+  .lens-card p{
+    font-size:1.06rem;
+    font-weight:400;
+    line-height:1.82;
+    color:var(--soft);
+  }
+
+  .lens-card p + p{
+    margin-top:14px;
+  }
+
+  .lens-card .node-mentions{
+    margin-top:18px;
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+
+  .node-mention{
+    font-family:'DM Mono', monospace;
+    font-size:.62rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    padding:4px 10px;
+    border-radius:14px;
+    border:1px solid var(--line);
+    color:var(--dim);
+  }
+
+  .node-mention.m1{border-color:rgba(52,211,153,.3); color:var(--node-rahway);}
+  .node-mention.m2{border-color:rgba(251,146,60,.3); color:var(--node-woodbridge);}
+  .node-mention.m3{border-color:rgba(129,140,248,.3); color:var(--node-edison);}
+
+  /* ── FIELD NOTE ── */
+  .field-note{
+    position:relative;z-index:10;
+    max-width:900px;
+    margin:16px auto 0;
+    padding:0 28px;
+    animation:fade-up 1s .25s ease both;
+  }
+
+  .field-note-inner{
+    border-top:1px solid var(--line);
+    padding-top:20px;
+    font-family:'DM Mono', monospace;
+    font-size:.8rem;
+    font-weight:400;
+    color:var(--dim);
+    letter-spacing:.04em;
+    line-height:1.6;
+  }
+
+  /* ── CLOSING ── */
+  .closing{
+    position:relative;z-index:10;
+    max-width:900px;
+    margin:56px auto 0;
+    padding:36px 28px 88px;
+    border-top:1px solid var(--line);
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:24px;
+    animation:fade-up 1s .4s ease both;
+  }
+
+  .closing-doc{
+    font-family:'Bebas Neue', sans-serif;
+    font-size:clamp(1.4rem,3vw,2.2rem);
+    letter-spacing:.05em;
+    line-height:1.2;
+    background:linear-gradient(90deg, var(--soft), rgba(242,239,233,.4));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+    max-width:560px;
+  }
+
+  .gsdi-mark{
+    font-family:'DM Mono', monospace;
+    font-size:.65rem;
+    font-weight:500;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--dim);
+    text-align:right;
+    line-height:2.1;
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+  }
+
+  @media(max-width:600px){
+    html{font-size:16px}
+    .lens-card{padding:28px 22px 24px}
+    .cluster-inner{padding:24px 22px}
+    .node-map-inner{padding:30px 24px}
+    .method-strip{display:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="ambient"></div>
+
+<header>
+  <div class="eyebrow">NJ Local Circuit Report</div>
+  <h1>The Voltage Corridor</h1>
+  <div class="circuit-id">RWE—01 &nbsp;·&nbsp; Rahway → Woodbridge → Edison</div>
+  <p class="header-intro">
+    Three towns sharing rail, highway, and commercial infrastructure — read as one circuit
+    instead of three separate municipalities. The configuration is the relationship
+    between the nodes, not any single node alone.
+  </p>
+</header>
+
+<!-- METHOD STRIP -->
+<div class="method-strip">
+  <span class="method-step active">Configuration</span>
+  <span class="method-arrow">→</span>
+  <span class="method-step">Readings</span>
+  <span class="method-arrow">→</span>
+  <span class="method-step">Your Synthesis</span>
+</div>
+
+<!-- NODE MAP -->
+<div class="node-map">
+  <div class="node-map-inner">
+    <div class="node-row">
+      <div class="node-stop">
+        <div class="node-marker n1"></div>
+        <div class="node-stop-name">Rahway</div>
+        <div class="node-stop-role">Zero Coordinate</div>
+      </div>
+      <div class="node-connector"></div>
+      <div class="node-stop">
+        <div class="node-marker n2"></div>
+        <div class="node-stop-name">Woodbridge</div>
+        <div class="node-stop-role">Convergence</div>
+      </div>
+      <div class="node-connector"></div>
+      <div class="node-stop">
+        <div class="node-marker n3"></div>
+        <div class="node-stop-name">Edison</div>
+        <div class="node-stop-role">Spread</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OBSERVED CONFIGURATION -->
+<div class="cluster-bar">
+  <div class="cluster-inner">
+    <div class="cluster-label"><span class="pin"></span>Observed Configuration</div>
+    <div class="cluster-sublabel">What physically connects these three towns — verifiable, not interpreted.</div>
+    <div class="cluster-statement">
+      The Northeast Corridor rail line and the Garden State Parkway / NJ Turnpike spur both
+      run through all three towns in sequence. Rahway anchors the southern end with a compact
+      transit-adjacent downtown. Woodbridge sits at the actual highway convergence point —
+      Parkway, Turnpike, and Routes 1, 9, and 35 all meet within its township lines.
+      Edison spreads that same infrastructure across the largest land area of the three,
+      trading density for reach.
+    </div>
+    <div class="cluster-nodes">
+      <div class="node-tag">Northeast Corridor Rail</div>
+      <div class="node-tag">Garden State Parkway</div>
+      <div class="node-tag">NJ Turnpike</div>
+      <div class="node-tag">Routes 1 / 9 / 35</div>
+      <div class="node-tag">Shared Industrial Belt</div>
+      <div class="node-tag">~12 Mile Span</div>
+    </div>
+    <div class="cluster-verify">
+      Verify it yourself: trace the Parkway and Turnpike through all three townships on any road map. Nothing in this section is an interpretation — the five readings below are.
+    </div>
+  </div>
+</div>
+
+<!-- TRANSITION LABEL -->
+<div class="transition-label">
+  <span class="rule"></span>
+  <span class="label-text">Ways To Read This Circuit</span>
+  <span class="rule"></span>
+</div>
+
+<!-- FIELD READINGS -->
+<div class="readings">
+
+  <!-- ECONOMIC -->
+  <div class="lens-card eco">
+    <div class="lens-meta">
+      <div class="lens-meta-left">
+        <div class="lens-dot"></div>
+        <div class="lens-name">Economic Read</div>
+      </div>
+      <div class="reading-tag">One reading, not the conclusion</div>
+    </div>
+    <h2>Three Different Bets On The Same Infrastructure</h2>
+    <p>
+      All three towns sit on the same rail line and the same highway spine, but each
+      one is monetizing that access differently. Rahway is betting on transit-oriented
+      density — small footprint, civic concentration, walkability as the asset.
+      Woodbridge is betting on convergence itself — its value is being the place where
+      everything meets, which is why it carries the regional mall and the logistics base.
+      Edison is betting on spread — enough land to host corporate campuses and big-box
+      retail that neither of the other two towns has room for.
+    </p>
+    <p>
+      None of these bets is correct or incorrect. But they explain why driving the same
+      twelve miles produces three completely different commercial environments, despite
+      identical access to the same rail and highway infrastructure.
+    </p>
+    <div class="node-mentions">
+      <span class="node-mention m1">Rahway: Density Bet</span>
+      <span class="node-mention m2">Woodbridge: Convergence Bet</span>
+      <span class="node-mention m3">Edison: Spread Bet</span>
+    </div>
+  </div>
+
+  <!-- MOBILITY -->
+  <div class="lens-card mob">
+    <div class="lens-meta">
+      <div class="lens-meta-left">
+        <div class="lens-dot"></div>
+        <div class="lens-name">Mobility Read</div>
+      </div>
+      <div class="reading-tag">One reading, not the conclusion</div>
+    </div>
+    <h2>A Corridor That Changes Its Own Rules Twice</h2>
+    <p>
+      Moving north from Rahway to Edison, the basic unit of movement changes twice.
+      In Rahway, the unit is the pedestrian block — the station, downtown, and civic
+      cluster are walkable as a sequence. In Woodbridge, the unit becomes the
+      highway interchange — movement is organized around on-ramps and the mall's
+      ring roads, not sidewalks. In Edison, the unit becomes the corporate campus
+      parking lot — distances that assume a car for even short trips.
+    </p>
+    <p>
+      A person could travel this entire circuit without ever changing transportation
+      mode and still experience three fundamentally different relationships to distance.
+      The infrastructure is continuous. The mobility logic it produces is not.
+    </p>
+    <div class="node-mentions">
+      <span class="node-mention m1">Rahway: Pedestrian Block</span>
+      <span class="node-mention m2">Woodbridge: Interchange</span>
+      <span class="node-mention m3">Edison: Campus Lot</span>
+    </div>
+  </div>
+
+  <!-- TEMPORAL -->
+  <div class="lens-card tem">
+    <div class="lens-meta">
+      <div class="lens-meta-left">
+        <div class="lens-dot"></div>
+        <div class="lens-name">Temporal Read</div>
+      </div>
+      <div class="reading-tag">One reading, not the conclusion</div>
+    </div>
+    <h2>The Corridor Has A Rush Hour Shadow</h2>
+    <p>
+      Woodbridge's position at the highway convergence point means it absorbs traffic
+      that has nothing to do with Woodbridge itself — Rahway commuters heading north
+      and Edison commuters heading south both pass through the same interchanges at
+      the same hours. The town in the middle carries congestion generated by the
+      towns on either side of it.
+    </p>
+    <p>
+      This produces a temporal asymmetry: Rahway and Edison each experience their own
+      traffic as a local problem with a local cause. Woodbridge experiences traffic
+      that is mostly caused somewhere else, arriving at predictable hours, for reasons
+      that have nothing to do with Woodbridge's own residents or businesses.
+    </p>
+    <div class="node-mentions">
+      <span class="node-mention m2">Woodbridge Absorbs the Shadow</span>
+    </div>
+  </div>
+
+  <!-- CULTURAL -->
+  <div class="lens-card cul">
+    <div class="lens-meta">
+      <div class="lens-meta-left">
+        <div class="lens-dot"></div>
+        <div class="lens-name">Cultural Read</div>
+      </div>
+      <div class="reading-tag">One reading, not the conclusion</div>
+    </div>
+    <h2>Three Identities That Rarely Reference Each Other</h2>
+    <p>
+      Despite the shared infrastructure, residents of these three towns largely don't
+      narrate themselves as part of a corridor. Rahway identifies through its arts
+      scene and downtown. Woodbridge identifies through the mall and its township-level
+      civic identity. Edison identifies through its size and its mix of residential
+      and corporate zones. Each town's public story is told as if the other two
+      don't materially shape its daily reality — even though commuting patterns,
+      retail competition, and traffic all flow between them constantly.
+    </p>
+    <p>
+      The corridor exists physically. It mostly doesn't exist narratively. That gap
+      between infrastructural connection and cultural self-perception is itself
+      worth noticing.
+    </p>
+    <div class="node-mentions">
+      <span class="node-mention m1">Rahway: Arts Identity</span>
+      <span class="node-mention m2">Woodbridge: Civic/Retail Identity</span>
+      <span class="node-mention m3">Edison: Scale Identity</span>
+    </div>
+  </div>
+
+  <!-- INVISIBLE -->
+  <div class="lens-card inv">
+    <div class="lens-meta">
+      <div class="lens-meta-left">
+        <div class="lens-dot"></div>
+        <div class="lens-name">Invisible Read</div>
+      </div>
+      <div class="reading-tag">One reading, not the conclusion</div>
+    </div>
+    <h2>What Holds Three Towns To One Spine</h2>
+    <p>
+      Nothing administrative binds these three towns together — they are three
+      separate municipal governments with three separate budgets, planning boards,
+      and political identities. What actually holds the corridor together is older
+      and harder to change: the rail line's original routing, the highway system
+      built decades after it, and the industrial and commercial land uses that
+      accumulated along both.
+    </p>
+    <p>
+      That means the corridor's coherence is infrastructural, not political. Any
+      one town could redevelop its own piece of the spine without coordinating with
+      the other two — and the circuit's logic would shift, town by town, with no
+      single body responsible for the corridor as a whole.
+    </p>
+    <div class="node-mentions">
+      <span class="node-mention m1">No Shared Governance</span>
+      <span class="node-mention m3">Infrastructure, Not Policy, Binds It</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- FIELD NOTE -->
+<div class="field-note">
+  <div class="field-note-inner">
+    Circuit RWE—01 &nbsp;|&nbsp; Union / Middlesex Counties &nbsp;|&nbsp; NJ Transit Northeast Corridor &nbsp;|&nbsp; Garden State Parkway / NJ Turnpike &nbsp;|&nbsp; ~12 Mile Span
+  </div>
+</div>
+
+<!-- CLOSING -->
+<div class="closing">
+  <div class="closing-doc">
+    The corridor is not three towns near each other.<br>
+    It is one infrastructure,<br>
+    read three different ways.
+  </div>
+  <div class="gsdi-mark">
+    Garden State<br>Dimensional Intelligence<br>Support NJ Local<br>Non-Collapse Doctrine
+  </div>
+</div>
+
+</body>
+</html>

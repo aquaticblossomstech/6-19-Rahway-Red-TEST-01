@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ways To Read — Rahway | NJ Local Field Page</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+
+  :root{
+    --void:#06080c;
+    --ink:#f2efe9;
+    --soft:#d4d0c8;
+    --muted:#8a8a9a;
+    --dim:#505060;
+    --line:rgba(255,255,255,.07);
+    --card:rgba(255,255,255,.032);
+
+    --eco:#7c3aed;
+    --mob:#e11d6a;
+    --tem:#ea7e00;
+    --cul:#0ea5e9;
+    --inv:#10b981;
+
+    --anchor:#f2efe9;
+  }
+
+  @keyframes prisma-drift{
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+  }
+  @keyframes fade-up{
+    from{opacity:0;transform:translateY(22px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+  @keyframes bar-in{
+    from{transform:scaleX(0)}
+    to{transform:scaleX(1)}
+  }
+
+  html{font-size:18px}
+
+  body{
+    background:var(--void);
+    color:var(--ink);
+    font-family:'DM Sans', sans-serif;
+    font-weight:400;
+    line-height:1.7;
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+
+  .mono{font-family:'DM Mono', monospace;}
+
+  /* ── AMBIENT GLOW ── */
+  .ambient{
+    position:fixed;top:0;left:0;width:100%;height:100%;
+    pointer-events:none;z-index:0;
+    background:
+      radial-gradient(ellipse 55% 35% at 12% 15%, rgba(124,58,237,.13) 0%, transparent 65%),
+      radial-gradient(ellipse 40% 30% at 80% 85%, rgba(225,29,106,.10) 0%, transparent 60%),
+      radial-gradient(ellipse 45% 40% at 60% 40%, rgba(14,165,233,.07) 0%, transparent 65%),
+      radial-gradient(ellipse 30% 25% at 85% 20%, rgba(16,185,129,.06) 0%, transparent 55%);
+    animation:prisma-drift 20s ease-in-out infinite;
+    background-size:250% 250%;
+  }
+
+  /* ── HEADER ── */
+  header{
+    position:relative;z-index:10;
+    padding:72px 28px 52px;
+    text-align:center;
+    border-bottom:1px solid var(--line);
+    animation:fade-up .8s ease both;
+  }
+
+  .eyebrow{
+    font-size:.72rem;
+    font-weight:600;
+    letter-spacing:.25em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-bottom:24px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+  }
+  .eyebrow::before,.eyebrow::after{
+    content:'';width:36px;height:1px;
+    background:var(--dim);
+  }
+
+  h1{
+    font-family:'Bebas Neue', sans-serif;
+    font-size:clamp(5rem,12vw,9.5rem);
+    line-height:.88;
+    letter-spacing:.025em;
+    background:linear-gradient(130deg,
+      #ffffff 0%,
+      #a78bfa 25%,
+      #f472b6 50%,
+      #fb923c 75%,
+      #34d399 100%);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+    background-size:200% 200%;
+    animation:prisma-drift 13s ease-in-out infinite;
+    margin-bottom:8px;
+  }
+
+  .city-name{
+    font-family:'Bebas Neue', sans-serif;
+    font-size:clamp(2rem,5vw,3.8rem);
+    letter-spacing:.16em;
+    color:rgba(242,239,233,.38);
+    margin-bottom:28px;
+  }
+
+  .header-intro{
+    font-size:1.15rem;
+    font-weight:300;
+    color:var(--soft);
+    max-width:640px;
+    margin:0 auto;
+    line-height:1.75;
+    letter-spacing:.01em;
+  }
+
+  /* ── METHOD STRIP ── */
+  .method-strip{
+    position:relative;z-index:10;
+    max-width:900px;
+    margin:36px auto 0;
+    padding:0 28px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+    animation:fade-up .85s .05s ease both;
+  }
+
+  .method-step{
+    font-family:'DM Mono', monospace;
+    font-size:.68rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--muted);
+    padding:7px 14px;
+    border:1px solid var(--line);
+    border-radius:20px;
+  }
+
+  .method-step.active{
+    color:var(--anchor);
+    border-color:rgba(242,239,233,.28);
+  }
+
+  .method-arrow{
+    color:var(--dim);
+    font-size:.75rem;
+  }
+
+  /* ── OBSERVED CONFIGURATION (ANCHOR) ── */
+  .cluster-bar{
+    position:relative;z-index:10;
+    max-width:900px;
+    margin:40px auto 0;
+    padding:0 28px;
+    animation:fade-up .9s .1s ease both;
+  }
+
+  .cluster-inner{
+    background:rgba(242,239,233,.035);
+    border:1px solid rgba(242,239,233,.14);
+    border-radius:14px;
+    padding:32px 36px;
+    position:relative;
+    overflow:hidden;
+  }
+
+  .cluster-inner::before{
+    content:'';
+    position:absolute;
+    top:0;left:0;right:0;height:2px;
+    background:linear-gradient(90deg, var(--eco), var(--mob), var(--tem), var(--cul), var(--inv));
+    transform-origin:left;
+    animation:bar-in 1.2s .5s ease both;
+  }
+
+  .cluster-label{
+    font-family:'DM Mono', monospace;
+    font-size:.66rem;
+    font-weight:500;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--anchor);
+    margin-bottom:6px;
+    opacity:.85;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+
+  .cluster-label .pin{
+    width:6px;height:6px;border-radius:50%;
+    background:var(--anchor);
+    box-shadow:0 0 8px var(--anchor);
+    flex-shrink:0;
+  }
+
+  .cluster-sublabel{
+    font-size:.78rem;
+    color:var(--dim);
+    margin-bottom:20px;
+    letter-spacing:.02em;
+  }
+
+  .cluster-statement{
+    font-size:1.2rem;
+    font-weight:400;
+    color:var(--ink);
+    line-height:1.7;
+    max-width:700px;
+  }
+
+  .cluster-nodes{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:22px;
+  }
+
+  .node-tag{
+    font-size:.72rem;
+    font-weight:600;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    padding:6px 14px;
+    border-radius:20px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.1);
+    color:var(--soft);
+  }
+
+  .cluster-verify{
+    margin-top:22px;
+    padding-top:18px;
+    border-top:1px solid var(--line);
+    font-family:'DM Mono', monospace;
+    font-size:.74rem;
+    color:var(--dim);
+    letter-spacing:.03em;
+    line-height:1.6;
+  }
+
+  /* ── TRANSITION LABEL ── */
+  .transition-label{
+    position:relative;z-index:10;
+    max-width:900px;
+    margin:48px auto 0;
+    padding:0 28px;
+    display:flex;
+    align-items:center;
+    gap:16px;
+    animation:fade-up 1s .15s ease both;
+  }
+
+  .transition-label .rule{
+    flex:1;
+    height:1px;
+    background:var(--line);
+  }
+
+  .transition-label .label-text{
+    font-family:'DM Mono', monospace;
+    font-size:.7rem;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--muted);
+    white-space:nowrap;
+  }
+
+  /* ── FIELD READINGS ── */
+  .readings{
+    position:relative;z-index:10;
+    max-width:900px;
+    margin:28px auto 0;
+    padding:0 28px;
+    display:flex;
+    flex-direction:column;
+    gap:28px;
+    animation:fade-up 1s .2s ease both;
+  }
+
+  .lens-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:36px 36px 32px;
+    position:relative;
+    overflow:hidden;
+    transition:transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+  }
+
+  .lens-card:hover{
+    transform:translateY(-3px);
+    border-color:rgba(255,255,255,.14);
+  }
+
+  .lens-card::before{
+    content:'';
+    position:absolute;
+    top:0;left:0;bottom:0;width:3px;
+    border-radius:14px 0 0 14px;
+  }
+
+  .lens-card.eco::before{background:linear-gradient(180deg,var(--eco),#a78bfa)}
+  .lens-card.mob::before{background:linear-gradient(180deg,var(--mob),#f472b6)}
+  .lens-card.tem::before{background:linear-gradient(180deg,var(--tem),#fbbf24)}
+  .lens-card.cul::before{background:linear-gradient(180deg,var(--cul),#818cf8)}
+  .lens-card.inv::before{background:linear-gradient(180deg,var(--inv),#34d399)}
+
+  .lens-card.eco:hover{box-shadow:0 8px 48px rgba(124,58,237,.12)}
+  .lens-card.mob:hover{box-shadow:0 8px 48px rgba(225,29,106,.10)}
+  .lens-card.tem:hover{box-shadow:0 8px 48px rgba(234,126,0,.10)}
+  .lens-card.cul:hover{box-shadow:0 8px 48px rgba(14,165,233,.10)}
+  .lens-card.inv:hover{box-shadow:0 8px 48px rgba(16,185,129,.10)}
+
+  .lens-meta{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:18px;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+
+  .lens-meta-left{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+
+  .lens-dot{
+    width:7px;height:7px;border-radius:50%;flex-shrink:0;
+  }
+  .eco .lens-dot{background:var(--eco);box-shadow:0 0 8px var(--eco)}
+  .mob .lens-dot{background:var(--mob);box-shadow:0 0 8px var(--mob)}
+  .tem .lens-dot{background:var(--tem);box-shadow:0 0 8px var(--tem)}
+  .cul .lens-dot{background:var(--cul);box-shadow:0 0 8px var(--cul)}
+  .inv .lens-dot{background:var(--inv);box-shadow:0 0 8px var(--inv)}
+
+  .lens-name{
+    font-size:.72rem;
+    font-weight:700;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+  }
+  .eco .lens-name{color:var(--eco)}
+  .mob .lens-name{color:var(--mob)}
+  .tem .lens-name{color:var(--tem)}
+  .cul .lens-name{color:var(--cul)}
+  .inv .lens-name{color:var(--inv)}
+
+  .reading-tag{
+    font-family:'DM Mono', monospace;
+    font-size:.64rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--dim);
+    padding:3px 10px;
+    border:1px solid var(--line);
+    border-radius:20px;
+  }
+
+  .lens-card h2{
+    font-family:'Bebas Neue', sans-serif;
+    font-size:2rem;
+    letter-spacing:.06em;
+    line-height:1;
+    color:var(--ink);
+    margin-bottom:18px;
+  }
+
+  .lens-card p{
+    font-size:1.08rem;
+    font-weight:400;
+    line-height:1.82;
+    color:var(--soft);
+  }
+
+  .lens-card p + p{
+    margin-top:14px;
+  }
+
+  /* ── FIELD NOTE ── */
+  .field-note{
+    position:relative;z-index:10;
+    max-width:900px;
+    margin:16px auto 0;
+    padding:0 28px;
+    animation:fade-up 1s .25s ease both;
+  }
+
+  .field-note-inner{
+    border-top:1px solid var(--line);
+    padding-top:20px;
+    font-family:'DM Mono', monospace;
+    font-size:.8rem;
+    font-weight:400;
+    color:var(--dim);
+    letter-spacing:.04em;
+    line-height:1.6;
+  }
+
+  /* ── CLOSING ── */
+  .closing{
+    position:relative;z-index:10;
+    max-width:900px;
+    margin:56px auto 0;
+    padding:36px 28px 88px;
+    border-top:1px solid var(--line);
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:24px;
+    animation:fade-up 1s .4s ease both;
+  }
+
+  .closing-doc{
+    font-family:'Bebas Neue', sans-serif;
+    font-size:clamp(1.4rem,3vw,2.2rem);
+    letter-spacing:.05em;
+    line-height:1.2;
+    background:linear-gradient(90deg, var(--soft), rgba(242,239,233,.4));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+    max-width:560px;
+  }
+
+  .gsdi-mark{
+    font-family:'DM Mono', monospace;
+    font-size:.65rem;
+    font-weight:500;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--dim);
+    text-align:right;
+    line-height:2.1;
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+  }
+
+  @media(max-width:600px){
+    html{font-size:16px}
+    .lens-card{padding:28px 22px 24px}
+    .cluster-inner{padding:24px 22px}
+    h1{font-size:clamp(4rem,18vw,7rem)}
+    .method-strip{display:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="ambient"></div>
+
+<header>
+  <div class="eyebrow">NJ Local Field Page</div>
+  <h1>Ways To Read</h1>
+  <div class="city-name">Rahway</div>
+  <p class="header-intro">
+    A mid-size NJ city with an unusual configuration — rarely discussed in those terms.
+    One observed configuration. Five interpretive readings of it. None of them cancel each other out.
+  </p>
+</header>
+
+<!-- METHOD STRIP -->
+<div class="method-strip">
+  <span class="method-step active">Configuration</span>
+  <span class="method-arrow">→</span>
+  <span class="method-step">Readings</span>
+  <span class="method-arrow">→</span>
+  <span class="method-step">Your Synthesis</span>
+</div>
+
+<!-- OBSERVED CONFIGURATION -->
+<div class="cluster-bar">
+  <div class="cluster-inner">
+    <div class="cluster-label"><span class="pin"></span>Observed Configuration</div>
+    <div class="cluster-sublabel">What is physically here — verifiable, not interpreted.</div>
+    <div class="cluster-statement">
+      Within two blocks of the NJ Transit station: City Hall, the Public Library,
+      the Police Station, and the Rec Center — surrounded by a walkable downtown grid.
+      That civic density, that close to a transit node, is genuinely rare in New Jersey.
+    </div>
+    <div class="cluster-nodes">
+      <div class="node-tag">NJ Transit Station</div>
+      <div class="node-tag">City Hall</div>
+      <div class="node-tag">Public Library</div>
+      <div class="node-tag">Police Station</div>
+      <div class="node-tag">Rec Center</div>
+      <div class="node-tag">Walkable Downtown Grid</div>
+      <div class="node-tag">2-Block Radius</div>
+    </div>
+    <div class="cluster-verify">
+      Verify it yourself: every node above sits within roughly a 2-block radius of Rahway Station. Nothing in this section is an interpretation — the five readings below are.
+    </div>
+  </div>
+</div>
+
+<!-- TRANSITION LABEL -->
+<div class="transition-label">
+  <span class="rule"></span>
+  <span class="label-text">Ways To Read This Configuration</span>
+  <span class="rule"></span>
+</div>
+
+<!-- FIELD READINGS -->
+<div class="readings">
+
+  <!-- ECONOMIC -->
+  <div class="lens-card eco">
+    <div class="lens-meta">
+      <div class="lens-meta-left">
+        <div class="lens-dot"></div>
+        <div class="lens-name">Economic Read</div>
+      </div>
+      <div class="reading-tag">One reading, not the conclusion</div>
+    </div>
+    <h2>The Value Compression Nobody Is Pricing</h2>
+    <p>
+      When a transit station, a city's entire civic apparatus, and a walkable commercial
+      grid collapse into a two-block radius, the conventional real estate logic breaks down.
+      You cannot replicate that configuration by adding amenities — it either exists as
+      a structural fact or it doesn't. Rahway has it.
+    </p>
+    <p>
+      The economic story most people tell about Rahway is a commuter story: proximity
+      to New York, affordable relative to the corridor. That's real. But it misses the
+      more unusual asset — a city where daily civic life and daily transit use share
+      the same sidewalk. The library is not a nice extra. It is walkable from the platform.
+      So is City Hall. That compression of civic function is capital that NJ cities
+      typically have to choose between, not inherit simultaneously.
+    </p>
+  </div>
+
+  <!-- MOBILITY -->
+  <div class="lens-card mob">
+    <div class="lens-meta">
+      <div class="lens-meta-left">
+        <div class="lens-dot"></div>
+        <div class="lens-name">Mobility Read</div>
+      </div>
+      <div class="reading-tag">One reading, not the conclusion</div>
+    </div>
+    <h2>A Grid That Actually Works On Foot</h2>
+    <p>
+      The station is not a boundary here — it is the center. Most NJ transit towns
+      organize themselves around the station as an edge: you arrive, you leave,
+      the town begins somewhere beyond the parking lot. Rahway's downtown grid sits
+      directly adjacent. The platform and the library entrance are within the same
+      walking decision.
+    </p>
+    <p>
+      What this produces is rare pedestrian logic: a person can exit a train,
+      conduct civic business, stop for food, and return to the platform without
+      ever needing a car. Not because Rahway is dense in the way a major city is dense,
+      but because the particular institutions that were placed near each other here
+      happen to be exactly the ones that people need in sequence.
+      That sequencing is almost never intentional. In Rahway it exists by accident of history,
+      which makes it more fragile and more worth naming.
+    </p>
+  </div>
+
+  <!-- TEMPORAL -->
+  <div class="lens-card tem">
+    <div class="lens-meta">
+      <div class="lens-meta-left">
+        <div class="lens-dot"></div>
+        <div class="lens-name">Temporal Read</div>
+      </div>
+      <div class="reading-tag">One reading, not the conclusion</div>
+    </div>
+    <h2>Morning City, Evening City, Weekend City</h2>
+    <p>
+      Rahway runs three distinct temporal identities, and they operate in the same
+      geography with almost no overlap. The commuter city activates at 6am around
+      the station platforms and dissolves by 9. The civic city — City Hall, the courts,
+      the library — runs a standard service-day rhythm, largely invisible to anyone
+      not using those services. The cultural and restaurant city activates after 6pm
+      and intensifies on weekends.
+    </p>
+    <p>
+      These three rhythms share streets and sidewalks but rarely share witnesses.
+      The morning commuter does not see the afternoon library user.
+      The weekend diner does not see the morning government worker.
+      What any single person experiences as Rahway is almost certainly
+      one of these three cities — not the configuration of all three running simultaneously
+      in the same two-block radius.
+    </p>
+  </div>
+
+  <!-- CULTURAL -->
+  <div class="lens-card cul">
+    <div class="lens-meta">
+      <div class="lens-meta-left">
+        <div class="lens-dot"></div>
+        <div class="lens-name">Cultural Read</div>
+      </div>
+      <div class="reading-tag">One reading, not the conclusion</div>
+    </div>
+    <h2>The Undernarrated City</h2>
+    <p>
+      Rahway has been a working arts city for decades — the Union County Performing Arts
+      Center is a genuine regional anchor, not a promotional line. The murals on
+      Irving Street are not decorative. The independent restaurant scene on Main Street
+      is not new. And yet the dominant public narrative about Rahway is either
+      the commuter story or the "up and coming" story, both of which locate the city's
+      value in the future or in its relationship to somewhere else.
+    </p>
+    <p>
+      The cultural read that is missing is the one that treats Rahway as already
+      complete — a city with its own internal rhythm, its own aesthetic vernacular,
+      and its own civic gravity. The performing arts center, the library, the
+      downtown grid, and the transit access are not preconditions for something that
+      hasn't happened yet. They are the city's actual present-tense condition,
+      right now, mostly unannounced.
+    </p>
+  </div>
+
+  <!-- INVISIBLE -->
+  <div class="lens-card inv">
+    <div class="lens-meta">
+      <div class="lens-meta-left">
+        <div class="lens-dot"></div>
+        <div class="lens-name">Invisible Read</div>
+      </div>
+      <div class="reading-tag">One reading, not the conclusion</div>
+    </div>
+    <h2>The Systems Running Under the Grid</h2>
+    <p>
+      The civic cluster that makes Rahway structurally unusual is not the result of
+      planning — it is the result of institutional inertia, property history, and
+      the particular way a small NJ city from a certain era organized its functions
+      before the car reorganized everything. That origin is invisible from the sidewalk.
+      So is its fragility.
+    </p>
+    <p>
+      When a police station relocates, a library expands its digital services
+      and shrinks its footprint, or a city hall consolidates departments into a
+      suburban campus, the two-block civic cluster dissolves. There is no zoning
+      category that protects a configuration. There is no metric that measures
+      the value of walking from a train to a government office.
+      The invisible read here is about what holds the visible configuration together —
+      and the answer is not policy. It is the accumulated friction cost of changing
+      what is already there.
+    </p>
+  </div>
+
+</div>
+
+<!-- FIELD NOTE -->
+<div class="field-note">
+  <div class="field-note-inner">
+    Zero Point — Rahway, NJ &nbsp;|&nbsp; Union County &nbsp;|&nbsp; NJ Transit North Jersey Coast Line &nbsp;|&nbsp; 40.6082° N, 74.2774° W
+  </div>
+</div>
+
+<!-- CLOSING -->
+<div class="closing">
+  <div class="closing-doc">
+    The goal is not to define the city.<br>
+    It is to expand what becomes visible<br>
+    when you look at it with more than one lens.
+  </div>
+  <div class="gsdi-mark">
+    Garden State<br>Dimensional Intelligence<br>Support NJ Local<br>Non-Collapse Doctrine
+  </div>
+</div>
+
+</body>
+</html>

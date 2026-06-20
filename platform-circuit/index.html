@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cranford · Westfield · Summit // The Platform Circuit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#060605; --panel:#0f0e0d; --panel2:#141210;
+  --border:#242220; --border-bright:#38342e;
+  --text:#eae7e1; --muted:#8a8480; --dim:#38342e;
+  --cyan:#4dd9d0; --violet:#9b7fff; --amber:#f0a830; --coral:#f06060; --sage:#72c47a; --ice:#78b4f0;
+  --prism:linear-gradient(115deg,var(--cyan),var(--violet),var(--amber),var(--coral),var(--sage),var(--ice),var(--cyan));
+  --type-pattern:#78b4f0; --type-obs:#eae7e1; --type-contra:#f06060; --type-question:#9b7fff; --type-signal:#f0a830;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-style:normal!important;}
+html{scroll-behavior:smooth;}
+@keyframes prismDrift{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+@keyframes pulseGlow{0%,100%{opacity:.4;}50%{opacity:1;}}
+@keyframes driftSlow{0%{background-position:0% 60%;}50%{background-position:100% 40%;}100%{background-position:0% 60%;}}
+@keyframes railSlide{0%{background-position:0% 50%;}100%{background-position:200% 50%;}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+*:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;}
+body{background:var(--void);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.65;font-size:18px;overflow-x:hidden;}
+h1,h2,h3{font-family:'Bebas Neue',sans-serif;font-weight:400;letter-spacing:.04em;line-height:1.05;}
+.mono{font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+.prism-text{background:var(--prism);background-size:500% 500%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:prismDrift 22s ease infinite;}
+.top-rail{height:3px;width:100%;background:var(--prism);background-size:300% 300%;animation:railSlide 8s linear infinite;}
+nav{display:flex;justify-content:space-between;align-items:center;padding:18px 6vw;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(6,6,5,0.97);z-index:100;backdrop-filter:blur(10px);flex-wrap:wrap;gap:14px;}
+.nav-brand{font-family:'Bebas Neue';font-size:1.3rem;letter-spacing:.1em;color:#fff;}
+.nav-brand .dim{color:var(--muted);}
+.nav-right{display:flex;align-items:center;gap:22px;flex-wrap:wrap;}
+.nav-link{font-family:'DM Mono';font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--cyan);text-decoration:none;}
+.nav-link:hover{text-decoration:underline;}
+.hero{padding:72px 6vw 56px;border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+.hero-glow{position:absolute;inset:-60% -20%;background:var(--prism);background-size:400% 400%;animation:driftSlow 32s ease infinite;opacity:.035;pointer-events:none;border-radius:50%;}
+.hero-eyebrow{margin-bottom:18px;}
+.hero h1{font-size:clamp(3rem,8vw,6.6rem);margin-bottom:18px;}
+.hero-lede{max-width:720px;color:var(--muted);font-size:1.08rem;line-height:1.74;margin-bottom:34px;}
+.hero-lede strong{color:var(--text);}
+.circuit-nodes-display{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.circuit-node-pill{font-family:'Bebas Neue';font-size:1.5rem;letter-spacing:.05em;color:var(--text);background:var(--panel);border:1px solid var(--border);padding:8px 22px;}
+.circuit-arrow{color:var(--cyan);font-size:1.1rem;}
+.hidden-note{padding:24px 6vw;background:var(--panel);border-bottom:1px solid var(--border);border-left:3px solid var(--violet);}
+.hidden-note .hn-label{display:block;margin-bottom:10px;}
+.hidden-note p{color:var(--muted);font-size:.97rem;line-height:1.7;max-width:920px;}
+.hidden-note p strong{color:var(--text);}
+.legend-row{padding:20px 6vw;border-bottom:1px solid var(--border);display:flex;gap:22px;flex-wrap:wrap;}
+.legend-item{font-family:'DM Mono';font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);}
+.legend-item strong{color:var(--muted);}
+.control-panel{padding:34px 6vw;border-bottom:1px solid var(--border);display:grid;grid-template-columns:1.1fr .9fr;gap:40px;}
+@media(max-width:760px){.control-panel{grid-template-columns:1fr;gap:24px;}}
+.control-group-label{display:block;margin-bottom:14px;}
+.q-list{display:flex;flex-direction:column;gap:8px;}
+.q-btn{background:transparent;border:1px solid var(--border);color:var(--text);padding:14px 18px;text-align:left;font-family:'DM Sans';font-size:.98rem;cursor:pointer;transition:all .18s;display:flex;justify-content:space-between;align-items:center;gap:12px;}
+.q-btn:hover{background:var(--panel);border-color:var(--muted);}
+.q-btn.active{border-color:var(--cyan);background:rgba(77,217,208,.05);}
+.q-btn.active .q-arrow{color:var(--cyan);}
+.q-arrow{color:var(--border);font-family:'DM Mono';font-size:.78rem;flex-shrink:0;}
+.mode-group{display:flex;flex-direction:column;gap:8px;}
+.mode-btn{background:transparent;border:1px solid var(--border);color:var(--muted);padding:14px 18px;font-family:'DM Mono';font-size:.74rem;cursor:pointer;transition:all .18s;text-transform:uppercase;letter-spacing:.08em;text-align:left;}
+.mode-btn:hover{border-color:var(--muted);color:var(--text);}
+.mode-btn.active{border-color:var(--text);color:var(--text);background:var(--panel);}
+.mode-dot{width:8px;height:8px;border-radius:50%;background:var(--border);display:inline-block;margin-right:10px;vertical-align:middle;transition:background .18s;}
+.mode-btn.active .mode-dot{background:var(--cyan);}
+.lens-bar{display:flex;flex-wrap:wrap;gap:8px;padding:20px 6vw;border-bottom:1px solid var(--border);}
+.lens-chip{background:var(--panel);border:1px solid var(--border);color:var(--muted);padding:7px 16px;font-family:'DM Mono';font-size:.66rem;cursor:pointer;transition:all .15s;text-transform:uppercase;letter-spacing:.08em;}
+.lens-chip.active{background:rgba(255,255,255,.04);}
+.layout{display:grid;grid-template-columns:200px 1fr;}
+@media(max-width:800px){.layout{grid-template-columns:1fr;}}
+.corridor-sidebar{border-right:1px solid var(--border);padding:40px 20px;position:sticky;top:73px;height:calc(100vh - 73px);overflow-y:auto;}
+@media(max-width:800px){.corridor-sidebar{display:none;}}
+.sidebar-label{display:block;margin-bottom:24px;}
+.strip{list-style:none;padding-left:18px;position:relative;}
+.strip::before{content:'';position:absolute;left:5px;top:8px;bottom:8px;width:1px;background:var(--border);}
+.strip-item{position:relative;margin-bottom:28px;font-family:'Bebas Neue';font-size:1.35rem;letter-spacing:.04em;color:var(--muted);cursor:pointer;transition:color .2s;}
+.strip-item::before{content:'';position:absolute;left:-22px;top:9px;width:10px;height:10px;background:var(--void);border:2px solid var(--border);border-radius:50%;transition:all .2s;}
+.strip-item.active{color:var(--text);}
+.strip-item.active::before{border-color:var(--cyan);background:var(--cyan);}
+.strip-item .strip-count{font-family:'DM Mono';font-size:.6rem;color:var(--border);display:block;margin-top:2px;transition:color .2s;}
+.strip-item.active .strip-count{color:var(--cyan);}
+.feed{padding:40px 5vw 100px;}
+.feed-empty{color:var(--muted);font-family:'DM Mono';font-size:.82rem;padding:60px 0;text-align:center;}
+.node-section{margin-bottom:70px;}
+.node-header{display:flex;align-items:baseline;gap:16px;margin-bottom:24px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+.node-header h2{font-size:clamp(2rem,5vw,3.2rem);}
+.node-count{font-family:'DM Mono';font-size:.7rem;color:var(--muted);}
+.card{background:var(--panel);border:1px solid var(--border);margin-bottom:20px;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--muted);}
+.card-body{padding:26px 30px;}
+.card-hr{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px;}
+.type-badge{font-family:'DM Mono';font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;font-weight:600;}
+.type-Pattern{background:var(--type-pattern);color:#0a1420;}
+.type-Observation{background:var(--type-obs);color:#222;}
+.type-Contradiction{background:var(--type-contra);color:#1a0505;}
+.type-Question{background:var(--type-question);color:#fff;}
+.type-EmergingSignal{background:var(--type-signal);color:#1f1300;}
+.lens-badge{font-family:'DM Mono';font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;padding:3px 11px;border:1px solid;}
+.card h3{font-size:1.32rem;text-transform:none;font-family:'DM Sans';font-weight:700;letter-spacing:0;margin-bottom:10px;}
+.card p{color:var(--text);font-size:1rem;line-height:1.66;margin-bottom:14px;}
+.card-expansion{font-size:.95rem;color:var(--muted);line-height:1.66;padding-top:12px;border-top:1px solid var(--border);}
+.card-expansion span{font-family:'DM Mono';font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);display:block;margin-bottom:6px;}
+.field-footer{padding:40px 6vw;border-top:1px solid var(--border);font-family:'DM Mono';font-size:.7rem;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;}
+</style>
+</head>
+<body>
+<div class="top-rail"></div>
+<nav>
+  <div class="nav-brand">The Platform Circuit <span class="dim">/ Garden State Grid</span></div>
+  <div class="nav-right">
+    <a class="nav-link" href="garden-state-signals.html">Signals</a>
+    <a class="nav-link" href="jersey-reads.html">Jersey Reads</a>
+    <a class="nav-link" href="business-reads.html">Business Reads</a>
+    <a class="nav-link" href="rwe-circuit.html">RWE Circuit</a>
+  </div>
+</nav>
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div class="mono hero-eyebrow">Circuit Interface // Cranford · Westfield · Summit</div>
+  <h1><span class="prism-text">The Platform Circuit</span></h1>
+  <p class="hero-lede">Three Union County commuter towns that look nearly identical on a "best towns to raise a family" list and read completely differently once you trace what the train station actually does to each downtown. <strong>Cranford's commercial core is wedged between the Rahway River and the Raritan Valley Line platform.</strong> Westfield's downtown has grown into a regional shopping destination that pulls well past its own town line. Summit's Midtown Direct service gives it a one-seat ride to Manhattan that does an outsized amount of work in defining who lives there and what it costs. This circuit reads what "desirable" is actually built out of, town by town.</p>
+  <div class="circuit-nodes-display">
+    <div class="circuit-node-pill">Cranford</div>
+    <span class="circuit-arrow">→</span>
+    <div class="circuit-node-pill">Westfield</div>
+    <span class="circuit-arrow">→</span>
+    <div class="circuit-node-pill">Summit</div>
+  </div>
+</div>
+
+<div class="hidden-note">
+  <span class="mono hn-label">Why This Circuit Reads Differently</span>
+  <p>Cranford, Westfield, and Summit aren't overlooked the way some circuits' towns are — real estate blogs, school-ranking lists, and "best downtowns in New Jersey" roundups cover all three constantly. What's missing isn't attention. It's structure. <strong>All three are absorbing the same statewide pressure — train-adjacent redevelopment tied to New Jersey's decades-old affordable housing framework, the one that traces back to a court case named after a town well south of here — differently enough that the "best towns" framing never has to account for it.</strong></p>
+</div>
+
+<div class="legend-row">
+  <div class="legend-item"><strong>Pattern</strong> = a recurring structural read</div>
+  <div class="legend-item"><strong>Observation</strong> = a direct, descriptive note</div>
+  <div class="legend-item"><strong>Contradiction</strong> = two true things in tension</div>
+  <div class="legend-item"><strong>Emerging Signal</strong> = developing, not yet confirmed</div>
+  <div class="legend-item"><strong>Question</strong> = an open thread, not an answer</div>
+</div>
+
+<div class="control-panel">
+  <div>
+    <span class="mono control-group-label">Investigative Question</span>
+    <div class="q-list" id="q-list"></div>
+  </div>
+  <div>
+    <span class="mono control-group-label">Reading Mode</span>
+    <div class="mode-group">
+      <button class="mode-btn active" onclick="setMode('observations')"><span class="mode-dot"></span>Observations</button>
+      <button class="mode-btn" onclick="setMode('signals')"><span class="mode-dot"></span>Signals</button>
+      <button class="mode-btn" onclick="setMode('questions')"><span class="mode-dot"></span>Open Questions</button>
+    </div>
+  </div>
+</div>
+<div class="lens-bar" id="lens-bar"></div>
+<div class="layout">
+  <aside class="corridor-sidebar">
+    <span class="mono sidebar-label">Platform Vector</span>
+    <ul class="strip" id="strip"></ul>
+  </aside>
+  <section class="feed" id="feed"></section>
+</div>
+<footer class="field-footer">
+  <span>Garden State Grid // The Platform Circuit</span>
+  <span>This is a reading, not a recommendation. Synthesis belongs to you.</span>
+</footer>
+
+<script>
+const LENS_COLOR = {Arrow:'#4dd9d0', Ladder:'#f0a830', Slide:'#f06060', Loop:'#72c47a', Jump:'#9b7fff'};
+const db = {
+  nodes: ["Cranford","Westfield","Summit"],
+  questions: [
+    {id:"q1", text:"What happens when a downtown looks finished but the edges keep changing?", lenses:["Slide"]},
+    {id:"q2", text:"Whose town is a regional downtown destination actually serving?", lenses:["Ladder","Arrow"]},
+    {id:"q3", text:"How does a one-seat train ride reshape what a town is for?", lenses:["Arrow","Jump"]},
+    {id:"q4", text:"What does affordable-housing-driven redevelopment do to towns built on historic charm?", lenses:["Slide","Jump"]},
+    {id:"q5", text:"Which daily rhythms run alongside the commute without anyone noticing?", lenses:["Loop","Ladder"]}
+  ],
+  items: [
+    {id:1, node:"Cranford", mode:"observations", type:"Pattern", lens:"Slide",
+     title:"The Downtown That Looks Finished",
+     text:"Cranford's downtown along the Rahway River reads as a complete, settled commercial district — the kind of place real estate listings describe as \"charming\" without qualification.",
+     expansion:"But the steady arrival of new multi-family construction near the train station suggests the corridor isn't actually static. It's just slow-moving enough to look that way.", date:"Jun 2026"},
+    {id:2, node:"Cranford", mode:"observations", type:"Observation", lens:"Arrow",
+     title:"The River Runs Through The Commute",
+     text:"Downtown sits directly between the Rahway River and the Raritan Valley Line platform, meaning the walk from the train to most of downtown has to cross water.",
+     expansion:"The geography itself shapes how directly downtown captures commuter foot traffic — a bridge is a small thing to ask a tired commuter to cross.", date:"Jun 2026"},
+    {id:3, node:"Cranford", mode:"observations", type:"Contradiction", lens:"Jump",
+     title:"Small-Town Branding, Regional Commute",
+     text:"Cranford markets itself with small-town, hometown language while functioning as a direct, fast commuter link to Newark and Manhattan.",
+     expansion:"The self-description and the actual daily use of the town are pulling in two different directions, and most residents experience both without noticing the gap.", date:"Jun 2026"},
+    {id:4, node:"Cranford", mode:"signals", type:"EmergingSignal", lens:"Slide",
+     title:"New Construction Clustering Near The Platform",
+     text:"Multi-family residential construction continues to concentrate within walking distance of the train station, consistent with transit-oriented redevelopment patterns in comparable commuter towns statewide.",
+     expansion:"Worth tracking whether this stays clustered near the platform or starts pushing further into the historic core.", date:"Jun 2026"},
+    {id:5, node:"Cranford", mode:"questions", type:"Question", lens:"Slide",
+     title:"What Does \"Finished\" Actually Mean For A Downtown?",
+     text:"If a downtown looks complete because nothing about it seems to be changing, is that stability — or is the change happening at the edges instead?",
+     expansion:"The dense new construction goes up a block away while the historic core stays exactly the same for the listing photos.", date:"Jun 2026"},
+
+    {id:6, node:"Westfield", mode:"observations", type:"Pattern", lens:"Ladder",
+     title:"The Downtown Built To Be A Destination",
+     text:"Westfield's downtown shopping district draws visitors from well beyond the town's own borders — less a typical Main Street, more a regional retail destination with a residential town built around it.",
+     expansion:"That's a different ladder rung than most NJ downtowns occupy. The question is what it costs the town to hold that position.", date:"Jun 2026"},
+    {id:7, node:"Westfield", mode:"observations", type:"Observation", lens:"Arrow",
+     title:"Retail Rents Set By Out-Of-Town Demand",
+     text:"Downtown commercial rents appear to track regional shopping demand more than local population — a retail district this size pulls customers from many surrounding towns, not just Westfield's own residents.",
+     expansion:"The arrow of demand points inward from a much wider radius than the town line suggests.", date:"Jun 2026"},
+    {id:8, node:"Westfield", mode:"observations", type:"Contradiction", lens:"Jump",
+     title:"Walkable Downtown, Car-Dependent Edges",
+     text:"The downtown core is genuinely walkable and pedestrian-oriented, while residential neighborhoods just a short distance away function entirely around driving.",
+     expansion:"Two completely different urban grammars inside one town line, with no real transition zone marking where one becomes the other.", date:"Jun 2026"},
+    {id:9, node:"Westfield", mode:"signals", type:"EmergingSignal", lens:"Slide",
+     title:"Redevelopment Pressure Near The Train Line",
+     text:"Like other Raritan Valley Line towns, Westfield continues to face pressure to add multi-family housing near its train station, tied to New Jersey's longstanding affordable-housing framework.",
+     expansion:"That pressure sits uneasily against a downtown identity built on historic, low-rise character — worth watching how the town resolves the tension.", date:"Jun 2026"},
+    {id:10, node:"Westfield", mode:"questions", type:"Question", lens:"Ladder",
+     title:"Who Is Westfield's Downtown Actually For?",
+     text:"If most of the people shopping downtown on a Saturday don't live in Westfield, whose town is the downtown actually serving?",
+     expansion:"And does that change what residents are owed when the next redevelopment decision gets made?", date:"Jun 2026"},
+
+    {id:11, node:"Summit", mode:"observations", type:"Pattern", lens:"Arrow",
+     title:"The Direct Line As Identity",
+     text:"Summit's Midtown Direct service gives it a one-seat ride to Manhattan that most of Union County doesn't have, and that single transit fact does an outsized amount of work defining the town's identity and its real estate premium.",
+     expansion:"One transit line, doing the work of an entire branding campaign.", date:"Jun 2026"},
+    {id:12, node:"Summit", mode:"observations", type:"Observation", lens:"Loop",
+     title:"A Hospital Town As Much As A Commuter Town",
+     text:"Overlook Medical Center anchors a significant share of Summit's daily foot traffic and employment, running on a shift schedule almost entirely disconnected from the morning and evening commuter rush that otherwise defines the town.",
+     expansion:"Two daily loops running through the same streets, on two different clocks, rarely acknowledging each other.", date:"Jun 2026"},
+    {id:13, node:"Summit", mode:"observations", type:"Contradiction", lens:"Jump",
+     title:"Affluence Next To Visible Need",
+     text:"Summit sits immediately adjacent to some of the wealthiest zip codes in the state, while still containing a hospital system, in-town apartment housing, and a more economically mixed population than the town's broader reputation suggests.",
+     expansion:"The reputation and the resident base are reading two different towns, and both are accurate at the same time.", date:"Jun 2026"},
+    {id:14, node:"Summit", mode:"signals", type:"EmergingSignal", lens:"Slide",
+     title:"New Apartment Construction Near The Station",
+     text:"Multi-family development continues near Summit's train station, part of the same statewide redevelopment pattern reshaping downtowns across the Raritan Valley and Morris & Essex corridors.",
+     expansion:"This is the third town in this circuit alone showing the identical signal. That's no longer a coincidence — it's a pattern.", date:"Jun 2026"},
+    {id:15, node:"Summit", mode:"questions", type:"Question", lens:"Arrow",
+     title:"Does A One-Seat Ride Change Who A Town Is For?",
+     text:"If Summit's defining advantage is a direct train to Manhattan, what happens to the town's identity as that same advantage becomes the reason redevelopment pressure keeps building near the station?",
+     expansion:"The thing that made the town desirable might be the same thing that makes it unrecognizable in twenty years.", date:"Jun 2026"}
+  ]
+};
+let cQ='q1', cM='observations', aL=[];
+function boot(){const q=db.questions.find(q=>q.id===cQ); aL=[...q.lenses]; rQ(); rL(); rS(); rF();}
+function setQ(id){cQ=id; const q=db.questions.find(q=>q.id===id); aL=[...q.lenses]; rQ(); rL(); rF();}
+function setMode(m){cM=m; document.querySelectorAll('.mode-btn').forEach(b=>b.classList.toggle('active', b.textContent.trim().toLowerCase().replace(/\s+/g,'')===m.replace('questions','openquestions'))); rF();}
+function tL(l){aL.includes(l) ? (aL.length>1 && (aL=aL.filter(x=>x!==l))) : aL.push(l); rL(); rF();}
+function rQ(){document.getElementById('q-list').innerHTML = db.questions.map(q=>`<button class="q-btn ${q.id===cQ?'active':''}" onclick="setQ('${q.id}')"><span>${q.text}</span><span class="q-arrow mono">→</span></button>`).join('');}
+function rL(){const all=["Arrow","Ladder","Slide","Loop","Jump"]; document.getElementById('lens-bar').innerHTML = all.map(l=>`<button class="lens-chip ${aL.includes(l)?'active':''}" style="border-color:${LENS_COLOR[l]};color:${aL.includes(l)?LENS_COLOR[l]:'var(--muted)'};" onclick="tL('${l}')">${l}</button>`).join('');}
+function rS(){document.getElementById('strip').innerHTML = db.nodes.map((n,i)=>`<li class="strip-item active" onclick="document.getElementById('node-${n.replace(/ /g,'-')}').scrollIntoView({behavior:'smooth',block:'start'})">${n}<span class="strip-count">${db.items.filter(it=>it.node===n).length} entries</span></li>`).join('');}
+function rF(){
+  const f = db.items.filter(it => it.mode===cM && aL.includes(it.lens));
+  let html='', any=false;
+  db.nodes.forEach(n=>{
+    const items = f.filter(it=>it.node===n);
+    if(!items.length) return;
+    any = true;
+    const nid = n.replace(/ /g,'-');
+    html += `<div class="node-section" id="node-${nid}"><div class="node-header"><h2>${n}</h2><span class="node-count mono">${items.length} ${cM}</span></div>`;
+    items.forEach(it=>{
+      const st = it.type.replace(/\s+/g,'');
+      html += `<div class="card"><div class="card-body"><div class="card-hr"><span class="type-badge type-${st}">${it.type}</span><span class="lens-badge" style="border-color:${LENS_COLOR[it.lens]};color:${LENS_COLOR[it.lens]};">${it.lens}</span></div><h3>${it.title}</h3><p>${it.text}</p><div class="card-expansion"><span>Editorial Expansion</span>${it.expansion}</div></div></div>`;
+    });
+    html += '</div>';
+  });
+  if(!any) html = `<div class="feed-empty">No ${cM} match this combination of lenses.<br>Try a different question or toggle a lens back on.</div>`;
+  document.getElementById('feed').innerHTML = html;
+}
+boot();
+</script>
+</body>
+</html>

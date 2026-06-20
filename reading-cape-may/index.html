@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ways To Read — Cape May | NJ Local Field Page</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+
+  :root{
+    --void:#06080c;
+    --ink:#f2efe9;
+    --soft:#d4d0c8;
+    --muted:#8a8a9a;
+    --dim:#505060;
+    --line:rgba(255,255,255,.07);
+    --card:rgba(255,255,255,.032);
+
+    --eco:#7c3aed;
+    --mob:#e11d6a;
+    --tem:#ea7e00;
+    --cul:#0ea5e9;
+    --inv:#10b981;
+  }
+
+  @keyframes prisma-drift{
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+  }
+  @keyframes fade-up{
+    from{opacity:0;transform:translateY(22px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+  @keyframes bar-in{
+    from{transform:scaleX(0)}
+    to{transform:scaleX(1)}
+  }
+
+  html{font-size:18px}
+
+  body{
+    background:var(--void);
+    color:var(--ink);
+    font-family:'DM Sans', sans-serif;
+    font-weight:400;
+    line-height:1.7;
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+
+  .ambient{
+    position:fixed;top:0;left:0;width:100%;height:100%;
+    pointer-events:none;z-index:0;
+    background:
+      radial-gradient(ellipse 55% 35% at 12% 15%, rgba(234,126,0,.12) 0%, transparent 65%),
+      radial-gradient(ellipse 40% 30% at 80% 85%, rgba(124,58,237,.10) 0%, transparent 60%),
+      radial-gradient(ellipse 45% 40% at 60% 40%, rgba(14,165,233,.08) 0%, transparent 65%),
+      radial-gradient(ellipse 30% 25% at 85% 20%, rgba(16,185,129,.06) 0%, transparent 55%);
+    animation:prisma-drift 20s ease-in-out infinite;
+    background-size:250% 250%;
+  }
+
+  header{
+    position:relative;z-index:10;
+    padding:72px 28px 52px;
+    text-align:center;
+    border-bottom:1px solid var(--line);
+    animation:fade-up .8s ease both;
+  }
+
+  .eyebrow{
+    font-size:.72rem;
+    font-weight:600;
+    letter-spacing:.25em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-bottom:24px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+  }
+  .eyebrow::before,.eyebrow::after{
+    content:'';width:36px;height:1px;
+    background:var(--dim);
+  }
+
+  h1{
+    font-family:'Bebas Neue', sans-serif;
+    font-size:clamp(5rem,12vw,9.5rem);
+    line-height:.88;
+    letter-spacing:.025em;
+    background:linear-gradient(130deg,
+      #ffffff 0%,
+      #fbbf24 25%,
+      #a78bfa 50%,
+      #38bdf8 75%,
+      #34d399 100%);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+    background-size:200% 200%;
+    animation:prisma-drift 13s ease-in-out infinite;
+    margin-bottom:8px;
+  }
+
+  .city-name{
+    font-family:'Bebas Neue', sans-serif;
+    font-size:clamp(2rem,5vw,3.8rem);
+    letter-spacing:.16em;
+    color:rgba(242,239,233,.38);
+    margin-bottom:28px;
+  }
+
+  .header-intro{
+    font-size:1.15rem;
+    font-weight:300;
+    color:var(--soft);
+    max-width:640px;
+    margin:0 auto;
+    line-height:1.75;
+    letter-spacing:.01em;
+  }
+
+  .cluster-bar{
+    position:relative;z-index:10;
+    max-width:900px;
+    margin:44px auto 0;
+    padding:0 28px;
+    animation:fade-up .9s .1s ease both;
+  }
+
+  .cluster-inner{
+    background:rgba(234,126,0,.08);
+    border:1px solid rgba(234,126,0,.22);
+    border-radius:14px;
+    padding:32px 36px;
+    position:relative;
+    overflow:hidden;
+  }
+
+  .cluster-inner::before{
+    content:'';
+    position:absolute;
+    top:0;left:0;right:0;height:2px;
+    background:linear-gradient(90deg, var(--tem), var(--eco), var(--cul));
+    transform-origin:left;
+    animation:bar-in 1.2s .5s ease both;
+  }
+
+  .cluster-label{
+    font-size:.68rem;
+    font-weight:700;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--tem);
+    margin-bottom:12px;
+    opacity:.9;
+  }
+
+  .cluster-statement{
+    font-size:1.2rem;
+    font-weight:400;
+    color:var(--ink);
+    line-height:1.7;
+    max-width:700px;
+  }
+
+  .cluster-nodes{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:20px;
+  }
+
+  .node-tag{
+    font-size:.72rem;
+    font-weight:600;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    padding:6px 14px;
+    border-radius:20px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.1);
+    color:var(--soft);
+  }
+
+  /* ── MECHANISM LOOP — distinct module for Cape May ── */
+  /* Shows the economic-preservation feedback loop as a sequence,
+     rather than as a single static stat. */
+  .mechanism{
+    position:relative;z-index:10;
+    max-width:900px;
+    margin:48px auto 0;
+    padding:0 28px;
+    animation:fade-up 1s .15s ease both;
+  }
+  .mechanism-title{
+    font-family:'Bebas Neue', sans-serif;
+    font-size:1.5rem;
+    letter-spacing:.08em;
+    color:var(--soft);
+    margin-bottom:18px;
+    text-align:center;
+  }
+  .mechanism-row{
+    display:flex;
+    align-items:stretch;
+    gap:8px;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+  .mech-step{
+    flex:1 1 150px;
+    background:rgba(255,255,255,.03);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:16px 14px;
+    text-align:center;
+    min-width:140px;
+  }
+  .mech-step .mech-num{
+    font-family:'Bebas Neue', sans-serif;
+    font-size:1.1rem;
+    color:var(--tem);
+    margin-bottom:6px;
+    letter-spacing:.06em;
+  }
+  .mech-step p{
+    font-size:.85rem;
+    color:var(--soft);
+    line-height:1.5;
+  }
+  .mech-arrow{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--dim);
+    font-size:1.3rem;
+    flex:0 0 auto;
+  }
+  @media(max-width:680px){
+    .mech-arrow{transform:rotate(90deg)}
+  }
+
+  .readings{
+    position:relative;z-index:10;
+    max-width:900px;
+    margin:52px auto 0;
+    padding:0 28px;
+    display:flex;
+    flex-direction:column;
+    gap:28px;
+    animation:fade-up 1s .2s ease both;
+  }
+
+  .lens-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:36px 36px 32px;
+    position:relative;
+    overflow:hidden;
+    transition:transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+  }
+
+  .lens-card:hover{
+    transform:translateY(-3px);
+    border-color:rgba(255,255,255,.14);
+  }
+
+  .lens-card::before{
+    content:'';
+    position:absolute;
+    top:0;left:0;bottom:0;width:3px;
+    border-radius:14px 0 0 14px;
+  }
+
+  .lens-card.eco::before{background:linear-gradient(180deg,var(--eco),#a78bfa)}
+  .lens-card.mob::before{background:linear-gradient(180deg,var(--mob),#f472b6)}
+  .lens-card.tem::before{background:linear-gradient(180deg,var(--tem),#fbbf24)}
+  .lens-card.cul::before{background:linear-gradient(180deg,var(--cul),#818cf8)}
+  .lens-card.inv::before{background:linear-gradient(180deg,var(--inv),#34d399)}
+
+  .lens-card.eco:hover{box-shadow:0 8px 48px rgba(124,58,237,.12)}
+  .lens-card.mob:hover{box-shadow:0 8px 48px rgba(225,29,106,.10)}
+  .lens-card.tem:hover{box-shadow:0 8px 48px rgba(234,126,0,.10)}
+  .lens-card.cul:hover{box-shadow:0 8px 48px rgba(14,165,233,.10)}
+  .lens-card.inv:hover{box-shadow:0 8px 48px rgba(16,185,129,.10)}
+
+  .lens-meta{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+  }
+
+  .lens-dot{
+    width:7px;height:7px;border-radius:50%;flex-shrink:0;
+  }
+  .eco .lens-dot{background:var(--eco);box-shadow:0 0 8px var(--eco)}
+  .mob .lens-dot{background:var(--mob);box-shadow:0 0 8px var(--mob)}
+  .tem .lens-dot{background:var(--tem);box-shadow:0 0 8px var(--tem)}
+  .cul .lens-dot{background:var(--cul);box-shadow:0 0 8px var(--cul)}
+  .inv .lens-dot{background:var(--inv);box-shadow:0 0 8px var(--inv)}
+
+  .lens-name{
+    font-size:.72rem;
+    font-weight:700;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+  }
+  .eco .lens-name{color:var(--eco)}
+  .mob .lens-name{color:var(--mob)}
+  .tem .lens-name{color:var(--tem)}
+  .cul .lens-name{color:var(--cul)}
+  .inv .lens-name{color:var(--inv)}
+
+  .lens-card h2{
+    font-family:'Bebas Neue', sans-serif;
+    font-size:2rem;
+    letter-spacing:.06em;
+    line-height:1;
+    color:var(--ink);
+    margin-bottom:18px;
+  }
+
+  .lens-card p{
+    font-size:1.08rem;
+    font-weight:400;
+    line-height:1.82;
+    color:var(--soft);
+  }
+
+  .lens-card p + p{
+    margin-top:14px;
+  }
+
+  .field-note{
+    position:relative;z-index:10;
+    max-width:900px;
+    margin:16px auto 0;
+    padding:0 28px;
+    animation:fade-up 1s .25s ease both;
+  }
+
+  .field-note-inner{
+    border-top:1px solid var(--line);
+    padding-top:20px;
+    font-size:.85rem;
+    font-weight:400;
+    color:var(--dim);
+    letter-spacing:.04em;
+    line-height:1.6;
+  }
+
+  .closing{
+    position:relative;z-index:10;
+    max-width:900px;
+    margin:56px auto 0;
+    padding:36px 28px 88px;
+    border-top:1px solid var(--line);
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:24px;
+    animation:fade-up 1s .4s ease both;
+  }
+
+  .closing-doc{
+    font-family:'Bebas Neue', sans-serif;
+    font-size:clamp(1.4rem,3vw,2.2rem);
+    letter-spacing:.05em;
+    line-height:1.2;
+    background:linear-gradient(90deg, var(--soft), rgba(242,239,233,.4));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+    max-width:560px;
+  }
+
+  .gsdi-mark{
+    font-size:.65rem;
+    font-weight:700;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--dim);
+    text-align:right;
+    line-height:2.1;
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+  }
+
+  @media(max-width:600px){
+    html{font-size:16px}
+    .lens-card{padding:28px 22px 24px}
+    .cluster-inner{padding:24px 22px}
+    h1{font-size:clamp(4rem,18vw,7rem)}
+    .mechanism-row{flex-direction:column}
+  }
+</style>
+</head>
+<body>
+
+<div class="ambient"></div>
+
+<header>
+  <div class="eyebrow">NJ Local Field Page</div>
+  <h1>Ways To Read</h1>
+  <div class="city-name">Cape May</div>
+  <p class="header-intro">
+    The only city in the United States designated, in its entirety, a
+    National Historic Landmark. Five interpretive lenses on a town
+    whose preservation laws are not nostalgia — they are the engine
+    that runs the local economy.
+  </p>
+</header>
+
+<div class="cluster-bar">
+  <div class="cluster-inner">
+    <div class="cluster-label">What makes Cape May structurally unusual</div>
+    <div class="cluster-statement">
+      Cape May was designated a National Historic Landmark in 1976 —
+      not as a single historic district within the city, but as the
+      whole city at once, one of the only municipalities in the country
+      with that status. The town's roughly 600 Victorian buildings are
+      protected by a Historic Preservation Commission with real legal
+      authority over exterior renovations, demolitions, and new
+      construction. Unlike most preservation efforts, Cape May's was
+      explicitly designed from the start as an economic development
+      strategy, not just an aesthetic one.
+    </div>
+    <div class="cluster-nodes">
+      <div class="node-tag">National Historic Landmark, 1976</div>
+      <div class="node-tag">380-Acre Historic District</div>
+      <div class="node-tag">600+ Victorian Buildings</div>
+      <div class="node-tag">Historic Preservation Commission</div>
+      <div class="node-tag">Whole-City Designation</div>
+      <div class="node-tag">Oldest U.S. Beach Resort</div>
+    </div>
+  </div>
+</div>
+
+<div class="mechanism">
+  <div class="mechanism-title">How Preservation Became the Economy</div>
+  <div class="mechanism-row">
+    <div class="mech-step">
+      <div class="mech-num">1876</div>
+      <p>A five-day fire destroys thirty acres of the town center.</p>
+    </div>
+    <div class="mech-arrow">→</div>
+    <div class="mech-step">
+      <div class="mech-num">REBUILD</div>
+      <p>Replacement homes are built almost uniformly in Victorian style.</p>
+    </div>
+    <div class="mech-arrow">→</div>
+    <div class="mech-step">
+      <div class="mech-num">1970s</div>
+      <p>Preservationists push for legal protection as a deliberate economic strategy.</p>
+    </div>
+    <div class="mech-arrow">→</div>
+    <div class="mech-step">
+      <div class="mech-num">TODAY</div>
+      <p>Tourism built on architectural preservation is the town's primary industry.</p>
+    </div>
+  </div>
+</div>
+
+<div class="readings">
+
+  <div class="lens-card eco">
+    <div class="lens-meta">
+      <div class="lens-dot"></div>
+      <div class="lens-name">Economic Read</div>
+    </div>
+    <h2>A Law That Functions As a Business Plan</h2>
+    <p>
+      Cape May's preservation framework was never primarily about
+      sentiment. The push for landmark status in the 1970s was led
+      explicitly by people who saw historic preservation as the
+      town's best path to future economic viability — not an obstacle
+      to development, but the development strategy itself. Tourism is
+      now the dominant industry in Cape May, and that tourism economy
+      exists specifically because the Victorian buildings were kept
+      rather than replaced.
+    </p>
+    <p>
+      This makes Cape May's economic model close to the opposite of a
+      typical NJ Shore town: instead of competing through new
+      construction, bigger boardwalks, or modern amenities, Cape May
+      competes by legally restricting its own ability to modernize —
+      and that restriction is the product being sold.
+    </p>
+  </div>
+
+  <div class="lens-card mob">
+    <div class="lens-meta">
+      <div class="lens-dot"></div>
+      <div class="lens-name">Mobility Read</div>
+    </div>
+    <h2>A Town Built to Be Walked, Photographed, and Toured</h2>
+    <p>
+      Cape May's mile-plus beach promenade and compact historic core
+      are built around slow movement — walking and trolley tours of
+      the Historic District are a primary visitor activity, not an
+      afterthought. The mobility logic of the town is oriented around
+      looking, not passing through, which is structurally different
+      from boardwalk towns built primarily for amusement throughput.
+    </p>
+    <p>
+      As the second-largest fishing port on the East Coast, Cape May
+      also carries a working maritime mobility layer most tourists
+      never register — commercial fishing vessels moving through
+      Cape May Harbor on a schedule entirely separate from the
+      walking-tour rhythm of the historic district just blocks away.
+    </p>
+  </div>
+
+  <div class="lens-card tem">
+    <div class="lens-meta">
+      <div class="lens-dot"></div>
+      <div class="lens-name">Temporal Read</div>
+    </div>
+    <h2>A "Historic" Identity That Is Partly a Rebuild, Not a Survival</h2>
+    <p>
+      Much of what visitors experience as Cape May's unbroken 19th-century
+      character is, more precisely, the result of a single catastrophic
+      event: the 1876 fire that leveled thirty acres of the town center,
+      followed by a near-uniform Victorian reconstruction. The town's
+      temporal identity is therefore less "untouched since the 1800s"
+      and more "rebuilt all at once in the 1800s, then legally frozen
+      a century later."
+    </p>
+    <p>
+      That distinction matters because it means Cape May's historic
+      character was, in a real sense, a single deliberate architectural
+      choice made after a disaster — then protected permanently by law
+      roughly a century afterward. The town's age and its legal
+      preservation status are separated by exactly that gap.
+    </p>
+  </div>
+
+  <div class="lens-card cul">
+    <div class="lens-meta">
+      <div class="lens-dot"></div>
+      <div class="lens-name">Cultural Read</div>
+    </div>
+    <h2>The Opposite Story From Asbury Park, Twenty Minutes Up the State</h2>
+    <p>
+      Where Asbury Park's identity is built around redevelopment —
+      revival after decades of decline, new investment layered onto
+      a once-struggling boardwalk — Cape May's identity runs in the
+      reverse direction entirely: durability through legally enforced
+      non-change. Both are genuine New Jersey shore success stories.
+      They are built on opposite theories of what makes a place
+      valuable to visit.
+    </p>
+    <p>
+      That makes Cape May and Asbury Park a useful pair for understanding
+      the actual range of Jersey Shore economic strategy: one town's
+      brand is "watch us become something new," the other's is "we
+      refuse, by law, to become anything else." Neither approach is
+      more authentically "Jersey Shore" than the other — they are two
+      different answers to the same structural question every shore
+      town eventually faces.
+    </p>
+  </div>
+
+  <div class="lens-card inv">
+    <div class="lens-meta">
+      <div class="lens-dot"></div>
+      <div class="lens-name">Invisible Read</div>
+    </div>
+    <h2>The Permission You Need to Touch a Window Frame</h2>
+    <p>
+      Behind the postcard view of Cape May's gingerbread porches sits
+      a genuinely strict regulatory apparatus: the Historic Preservation
+      Commission has legal authority over exterior renovations,
+      demolitions, and new construction throughout the landmark district,
+      and property owners are legally required to comply — though the
+      Commission's authority stops at the front door, with no jurisdiction
+      over interior renovations.
+    </p>
+    <p>
+      What stays invisible to most visitors is how much ongoing
+      negotiation, permitting, and constraint sits behind every
+      "perfectly preserved" facade — a homeowner wanting to replace a
+      window or repaint a porch is operating inside a legal framework
+      most tourists assume is simply taste, not law. The Victorian
+      beauty is real. So is the bureaucracy that keeps it that way,
+      year after year, one renovation application at a time.
+    </p>
+  </div>
+
+</div>
+
+<div class="field-note">
+  <div class="field-note-inner">
+    Cape May, NJ &nbsp;|&nbsp; Cape May County &nbsp;|&nbsp; National Historic Landmark since 1976 &nbsp;|&nbsp; 38.9351° N, 74.9060° W
+  </div>
+</div>
+
+<div class="closing">
+  <div class="closing-doc">
+    The goal is not to declare preservation superior to redevelopment.<br>
+    It is to expand what becomes visible<br>
+    when you look at it with more than one lens.
+  </div>
+  <div class="gsdi-mark">
+    Garden State<br>Dimensional Intelligence<br>Support NJ Local<br>Non-Collapse Doctrine
+  </div>
+</div>
+
+</body>
+</html>

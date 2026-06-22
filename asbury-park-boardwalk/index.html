@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ways To Read — Asbury Park Boardwalk</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+
+:root {
+  --bg: #07080f;
+  --surface: #0c0d1a;
+  --surface-2: #101120;
+  --border: rgba(255,255,255,0.07);
+  --border-strong: rgba(255,255,255,0.13);
+  --text: #eae8f2;
+  --muted: rgba(234,232,242,0.52);
+  --muted-strong: rgba(234,232,242,0.72);
+  --v: #7c2fff;
+  --c: #00c2ff;
+  --m: #00ffcc;
+  --a: #ffb300;
+  --r: #ff3a6e;
+  --prismatic: linear-gradient(90deg, #7c2fff 0%, #00c2ff 25%, #00ffcc 50%, #ffb300 75%, #ff3a6e 100%);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-style: normal !important;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 17px;
+  line-height: 1.78;
+  overflow-x: hidden;
+}
+
+/* PULSE BAR */
+.pulse {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--prismatic);
+  background-size: 400% 100%;
+  animation: flow 18s linear infinite;
+  z-index: 200;
+}
+
+@keyframes flow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 400% 50%; }
+}
+
+@keyframes tidal {
+  0% { opacity: 0.55; }
+  50% { opacity: 1; }
+  100% { opacity: 0.55; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 3px; left: 0; right: 0;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  background: rgba(7,8,15,0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  z-index: 199;
+}
+
+.nav-brand {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.05rem;
+  letter-spacing: 0.14em;
+  background: var(--prismatic);
+  background-size: 400% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: flow 18s linear infinite;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+}
+
+.nav-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.nav-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--m);
+  animation: tidal 4s ease-in-out infinite;
+}
+
+/* HERO */
+.hero {
+  padding: 122px 2rem 4.5rem;
+  max-width: 980px;
+  margin: 0 auto;
+  border-bottom: 1px solid var(--border);
+  animation: fadeUp 0.7s ease both;
+}
+
+.hero-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1.6rem;
+  display: flex;
+  gap: 1.4rem;
+  flex-wrap: wrap;
+}
+
+.hero-eyebrow span { opacity: 0.55; }
+.hero-eyebrow strong {
+  color: var(--m);
+  font-weight: 500;
+  opacity: 1;
+}
+
+.hero h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3.2rem, 8vw, 7.5rem);
+  line-height: 0.93;
+  letter-spacing: 0.025em;
+  margin-bottom: 0.15em;
+}
+
+.hero h1 .line1 { display: block; color: var(--text); }
+.hero h1 .line2 {
+  display: block;
+  background: var(--prismatic);
+  background-size: 400% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: flow 18s linear infinite;
+}
+
+.hero-stmt {
+  margin-top: 2rem;
+  font-size: 1.12rem;
+  color: var(--muted-strong);
+  max-width: 68ch;
+  line-height: 1.85;
+}
+
+.hero-meta {
+  margin-top: 2rem;
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.hero-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.hero-meta-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.hero-meta-value {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+/* CALIBRATION BLOCK */
+.calibration {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.calibration-inner {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 2.8rem 2rem;
+}
+
+.calibration-prompt {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--m);
+  margin-bottom: 1rem;
+}
+
+.calibration-text {
+  font-size: 1.05rem;
+  color: var(--muted-strong);
+  max-width: 66ch;
+  line-height: 1.85;
+  border-left: 2px solid var(--m);
+  padding-left: 1.2rem;
+}
+
+.calibration-text strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* SEASONAL STRIP */
+.season-strip {
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-2);
+  animation: tidal 16s ease-in-out infinite;
+}
+
+.season-strip-inner {
+  max-width: 980px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.season {
+  padding: 1.6rem 1.8rem;
+  border-right: 1px solid var(--border);
+  position: relative;
+}
+
+.season:last-child { border-right: none; }
+
+.season-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.5rem;
+}
+
+.season-name.sum { color: var(--a); }
+.season-name.spr { color: var(--m); }
+.season-name.fal { color: var(--r); }
+.season-name.win { color: var(--c); }
+
+.season-note {
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+/* LENSES */
+.lenses {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.lens {
+  padding: 3.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.lens:last-of-type { border-bottom: none; }
+
+.lens-header {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 2.2rem;
+  padding-bottom: 1.2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.lens-number {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+}
+
+.lens-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.9rem;
+  letter-spacing: 0.06em;
+  line-height: 1;
+}
+
+.lens-title.ec { color: var(--a); }
+.lens-title.mo { color: var(--c); }
+.lens-title.te { color: var(--v); }
+.lens-title.cu { color: var(--m); }
+.lens-title.inv { color: var(--r); }
+
+/* EVIDENCE BLOCKS */
+.evidence-block {
+  margin-bottom: 1.6rem;
+}
+
+.evidence-block:last-child { margin-bottom: 0; }
+
+.evidence-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.evidence-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.label-observed { color: var(--muted-strong); }
+.label-read { color: var(--muted); }
+
+.evidence-text {
+  font-size: 1.05rem;
+  color: rgba(234,232,242,0.82);
+  max-width: 70ch;
+  line-height: 1.85;
+}
+
+/* READ COLLAPSE */
+.read-wrapper { position: relative; }
+
+.read-toggle {
+  display: none;
+}
+
+.read-body {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.4s ease;
+}
+
+.read-toggle:checked ~ .read-body {
+  max-height: 800px;
+}
+
+.read-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  cursor: pointer;
+  margin-top: 0.8rem;
+  padding: 0.5rem 0;
+  border: none;
+  background: none;
+  transition: color 0.2s;
+  user-select: none;
+}
+
+.read-trigger:hover { color: var(--text); }
+
+.read-trigger .arrow {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.read-toggle:checked ~ .read-trigger .arrow {
+  transform: rotate(90deg);
+}
+
+.read-toggle:checked ~ .read-trigger .trigger-text::after {
+  content: 'Hide Interpretation';
+}
+
+.read-trigger .trigger-text::after {
+  content: 'View Interpretation ';
+}
+
+/* OPEN LOOP */
+.open-loop {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 4rem 2rem;
+}
+
+.open-loop-inner { max-width: 980px; margin: 0 auto; }
+
+.open-loop-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1.4rem;
+}
+
+.open-loop-q {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1.7rem, 3.2vw, 2.6rem);
+  line-height: 1.18;
+  background: var(--prismatic);
+  background-size: 400% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: flow 18s linear infinite;
+  max-width: 800px;
+}
+
+/* CONTRIBUTION LAYER */
+.contribute {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 4rem 2rem 5rem;
+}
+
+.contribute-header {
+  margin-bottom: 2.8rem;
+}
+
+.contribute-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.8rem;
+}
+
+.contribute-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  color: var(--text);
+}
+
+.contribute-stmt {
+  margin-top: 1rem;
+  font-size: 0.98rem;
+  color: var(--muted);
+  max-width: 60ch;
+  line-height: 1.8;
+}
+
+.contribute-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.contribute-card {
+  background: var(--surface);
+  padding: 2rem 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  text-decoration: none;
+  transition: background 0.2s;
+  position: relative;
+}
+
+.contribute-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+
+.contribute-card.obs::before { background: var(--c); }
+.contribute-card.read::before { background: var(--m); }
+.contribute-card.q::before { background: var(--r); }
+
+.contribute-card:hover { background: var(--surface-2); }
+
+.contribute-card-type {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.contribute-card.obs .contribute-card-type { color: var(--c); }
+.contribute-card.read .contribute-card-type { color: var(--m); }
+.contribute-card.q .contribute-card-type { color: var(--r); }
+
+.contribute-card-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: 0.06em;
+  color: var(--text);
+}
+
+.contribute-card-desc {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.65;
+  flex: 1;
+}
+
+.contribute-card-example {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--muted);
+  border-left: 2px solid var(--border-strong);
+  padding-left: 0.8rem;
+  line-height: 1.55;
+  margin-top: 0.4rem;
+}
+
+.contribute-card-cta {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted-strong);
+  margin-top: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.contribute-card-cta::after {
+  content: '→';
+}
+
+/* LEDGER */
+.ledger {
+  background: var(--surface-2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1.2rem 2rem;
+}
+
+.ledger-inner {
+  max-width: 980px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.ledger-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.ledger-items {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.ledger-item {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  color: var(--muted-strong);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ledger-item .dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+}
+
+.dot-c { background: var(--c); }
+.dot-m { background: var(--m); }
+.dot-r { background: var(--r); }
+
+/* FOOTER */
+footer {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.footer-left, .footer-right {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.footer-right a {
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-right a:hover { color: var(--text); }
+
+/* RESPONSIVE */
+@media (max-width: 720px) {
+  .season-strip-inner {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .season:nth-child(2) { border-right: none; }
+  .season:nth-child(3) { border-top: 1px solid var(--border); }
+  .season:nth-child(4) { border-top: 1px solid var(--border); border-right: none; }
+  .contribute-grid { grid-template-columns: 1fr; }
+  .nav-tag { display: none; }
+  .hero-meta { gap: 1.2rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse, .nav-brand, .open-loop-q, .hero h1 .line2 {
+    animation: none;
+  }
+  .tidal { animation: none; }
+  .read-body { transition: none; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="pulse"></div>
+
+<nav>
+  <div class="nav-brand">Ways To Read · NJ Local</div>
+  <div class="nav-right">
+    <div class="nav-dot"></div>
+    <div class="nav-tag">Monmouth County · Shore · Field Page</div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">
+    <span>Field Page v1.1</span>
+    <span>·</span>
+    <span>Monmouth County</span>
+    <span>·</span>
+    <strong>Shore Field Page</strong>
+  </div>
+
+  <h1>
+    <span class="line1">ASBURY PARK</span>
+    <span class="line2">BOARDWALK</span>
+  </h1>
+
+  <p class="hero-stmt">
+    The same half-mile of boards and buildings. Four different places depending on the month. Five ways to read what remains constant.
+  </p>
+
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <div class="hero-meta-label">Lenses</div>
+      <div class="hero-meta-value">Economic · Mobility · Temporal · Cultural · Invisible</div>
+    </div>
+    <div class="hero-meta-item">
+      <div class="hero-meta-label">Zero Point</div>
+      <div class="hero-meta-value">Seasonal Dissolve</div>
+    </div>
+  </div>
+</div>
+
+<div class="calibration">
+  <div class="calibration-inner">
+    <div class="calibration-prompt">One thing to notice before you read</div>
+    <p class="calibration-text">
+      What you find here in <strong>July</strong> will not match what you encounter in <strong>November</strong>. The physical timber and masonry remain constant. The social and economic reality shifts completely depending on when you arrive.
+    </p>
+  </div>
+</div>
+
+<div class="season-strip">
+  <div class="season-strip-inner">
+    <div class="season">
+      <div class="season-name sum">Summer</div>
+      <div class="season-note">Maximum presence. Tens of thousands daily. Every storefront active. The ocean as backdrop to a full economy.</div>
+    </div>
+    <div class="season">
+      <div class="season-name spr">Spring</div>
+      <div class="season-note">Structures reopening. Anticipatory mood. The season not yet fully materialized.</div>
+    </div>
+    <div class="season">
+      <div class="season-name fal">Fall</div>
+      <div class="season-note">Businesses close in sequence. The place empties visibly. Raw structure becomes legible.</div>
+    </div>
+    <div class="season">
+      <div class="season-name win">Winter</div>
+      <div class="season-note">Locked shutters. Salt-stained boards. Empty sightlines. The boardwalk as itself.</div>
+    </div>
+  </div>
+</div>
+
+<div class="lenses">
+
+  <!-- Economic Read -->
+  <div class="lens">
+    <div class="lens-header">
+      <span class="lens-number">01</span>
+      <div class="lens-title ec">Economic Read</div>
+    </div>
+    <div class="evidence-block">
+      <div class="evidence-label label-observed">Observed</div>
+      <p class="evidence-text">
+        Oceanfront businesses operate with shortened or zero hours from October through April. Multi-story residential buildings line the immediate beach blocks. Commercial vacancies are visible along Cookman Avenue and the rail corridor west of the boardwalk.
+      </p>
+    </div>
+    <div class="read-wrapper">
+      <input type="checkbox" class="read-toggle" id="read-ec">
+      <label class="read-trigger" for="read-ec">
+        <span class="arrow">›</span>
+        <span class="trigger-text"></span>
+      </label>
+      <div class="read-body">
+        <div class="evidence-block" style="margin-top:1.2rem;">
+          <div class="evidence-label label-read">Read</div>
+          <p class="evidence-text">
+            The boardwalk economy relies on extreme temporal compression, forcing businesses to capture twelve months of survival within an eight-to-ten-week summer window. This favors deep developer capital and creates a wealth gradient running from the beachfront east to the disinvested west side.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobility Read -->
+  <div class="lens">
+    <div class="lens-header">
+      <span class="lens-number">02</span>
+      <div class="lens-title mo">Mobility Read</div>
+    </div>
+    <div class="evidence-block">
+      <div class="evidence-label label-observed">Observed</div>
+      <p class="evidence-text">
+        For two summer months, car traffic is prohibited on the boardwalk, rendering it a pure pedestrian corridor. Multi-acre surface parking lots flank the waterfront zone. The NJ Transit rail station sits nearly a mile inland.
+      </p>
+    </div>
+    <div class="read-wrapper">
+      <input type="checkbox" class="read-toggle" id="read-mo">
+      <label class="read-trigger" for="read-mo">
+        <span class="arrow">›</span>
+        <span class="trigger-text"></span>
+      </label>
+      <div class="read-body">
+        <div class="evidence-block" style="margin-top:1.2rem;">
+          <div class="evidence-label label-read">Read</div>
+          <p class="evidence-text">
+            The boardwalk operates as a localized pedestrian paradise structurally dependent on a massive automotive footprint. Access friction is offloaded onto non-car users navigating the gap between transit and the shore economy.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Temporal Read -->
+  <div class="lens">
+    <div class="lens-header">
+      <span class="lens-number">03</span>
+      <div class="lens-title te">Temporal Read</div>
+    </div>
+    <div class="evidence-block">
+      <div class="evidence-label label-observed">Observed</div>
+      <p class="evidence-text">
+        A single eastward sightline captures 1920s Beaux-Arts masonry of Convention Hall, boarded-up remnants from late-20th-century disinvestment, and contemporary glass-and-steel developments. In October, seasonal signage removal leaves raw structural timber exposed.
+      </p>
+    </div>
+    <div class="read-wrapper">
+      <input type="checkbox" class="read-toggle" id="read-te">
+      <label class="read-trigger" for="read-te">
+        <span class="arrow">›</span>
+        <span class="trigger-text"></span>
+      </label>
+      <div class="read-body">
+        <div class="evidence-block" style="margin-top:1.2rem;">
+          <div class="evidence-label label-read">Read</div>
+          <p class="evidence-text">
+            The boardwalk functions as an architectural container holding multiple eras simultaneously. The autumn dissolve strips away the commercial skin, exposing the core structure and revealing that the permanent condition is the off-season vacuum.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cultural Read -->
+  <div class="lens">
+    <div class="lens-header">
+      <span class="lens-number">04</span>
+      <div class="lens-title cu">Cultural Read</div>
+    </div>
+    <div class="evidence-block">
+      <div class="evidence-label label-observed">Observed</div>
+      <p class="evidence-text">
+        Prominent murals and tourism campaigns highlight Bruce Springsteen and the city's music history. Housing costs in surrounding neighborhoods have increased significantly over the past two decades.
+      </p>
+    </div>
+    <div class="read-wrapper">
+      <input type="checkbox" class="read-toggle" id="read-cu">
+      <label class="read-trigger" for="read-cu">
+        <span class="arrow">›</span>
+        <span class="trigger-text"></span>
+      </label>
+      <div class="read-body">
+        <div class="evidence-block" style="margin-top:1.2rem;">
+          <div class="evidence-label label-read">Read</div>
+          <p class="evidence-text">
+            Asbury Park trades on a commodified historical mythology. The pioneer communities that helped revive the city in the early 2000s now face displacement pressures created by the value they helped generate.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Invisible Read -->
+  <div class="lens">
+    <div class="lens-header">
+      <span class="lens-number">05</span>
+      <div class="lens-title inv">Invisible Read</div>
+    </div>
+    <div class="evidence-block">
+      <div class="evidence-label label-observed">Observed</div>
+      <p class="evidence-text">
+        An active rail line physically divides the city into eastern and western halves. East features prominent tourist infrastructure; west contains older residential neighborhoods. Steel elements in Convention Hall show ongoing salt accumulation.
+      </p>
+    </div>
+    <div class="read-wrapper">
+      <input type="checkbox" class="read-toggle" id="read-inv">
+      <label class="read-trigger" for="read-inv">
+        <span class="arrow">›</span>
+        <span class="trigger-text"></span>
+      </label>
+      <div class="read-body">
+        <div class="evidence-block" style="margin-top:1.2rem;">
+          <div class="evidence-label label-read">Read</div>
+          <p class="evidence-text">
+            The visible success of the boardwalk is subsidized by invisible networks: spatial containment of costs west of the tracks and continuous, uncelebrated maintenance against the maritime environment. The public story requires the invisibility of both its social costs and physical upkeep.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="ledger">
+  <div class="ledger-inner">
+    <div class="ledger-label">Field Ledger</div>
+    <div class="ledger-items">
+      <div class="ledger-item">
+        <div class="dot dot-c"></div>
+        <span>3 observations verified</span>
+      </div>
+      <div class="ledger-item">
+        <div class="dot dot-m"></div>
+        <span>1 alternate reading</span>
+      </div>
+      <div class="ledger-item">
+        <div class="dot dot-r"></div>
+        <span>2 open questions</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="open-loop">
+  <div class="open-loop-inner">
+    <div class="open-loop-label">Open Question · No Resolution</div>
+    <div class="open-loop-q">
+      Asbury Park has been revived through mythology, pioneer communities, and capital. What version of the city is being restored — and for whom — remains unsettled.
+    </div>
+  </div>
+</div>
+
+<div class="contribute">
+  <div class="contribute-header">
+    <div class="contribute-eyebrow">Contribute to the Read</div>
+    <div class="contribute-title">LOCAL KNOWLEDGE<br>BUILDS LEGIBILITY</div>
+    <p class="contribute-stmt">
+      Money is useful. Local knowledge, access, and corrections are often more valuable. Residents, workers, and business owners contribute differently — by design. Select the layer that matches what you have.
+    </p>
+  </div>
+
+  <div class="contribute-grid">
+
+    <a href="#" class="contribute-card obs" target="_blank">
+      <div class="contribute-card-type">Layer 01</div>
+      <div class="contribute-card-name">Add an Observation</div>
+      <p class="contribute-card-desc">
+        A specific, verifiable physical fact or pattern. Located. Time-bound. Free of interpretation.
+      </p>
+      <div class="contribute-card-example">
+        "The parking meters on Cookman St switch to lower rates on October 15th annually."
+      </div>
+      <div class="contribute-card-cta">Submit Field Evidence</div>
+    </a>
+
+    <a href="#" class="contribute-card read" target="_blank">
+      <div class="contribute-card-type">Layer 02</div>
+      <div class="contribute-card-name">Add a Reading</div>
+      <p class="contribute-card-desc">
+        How you interpret an existing observation through your lived or professional relationship to this place.
+      </p>
+      <div class="contribute-card-example">
+        "Tied to Economic Read: as a year-round business owner..."
+      </div>
+      <div class="contribute-card-cta">Submit Interpretation</div>
+    </a>
+
+    <a href="#" class="contribute-card q" target="_blank">
+      <div class="contribute-card-type">Layer 03</div>
+      <div class="contribute-card-name">File a Question</div>
+      <p class="contribute-card-desc">
+        An unresolved tension or systemic question this page hasn't addressed. Must remain open.
+      </p>
+      <div class="contribute-card-example">
+        "How does seasonal tax revenue volatility shape year-round capital allocation?"
+      </div>
+      <div class="contribute-card-cta">Submit Open Inquiry</div>
+    </a>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-left">Ways To Read · Asbury Park Boardwalk · Field Page v1.1</div>
+  <div class="footer-right">Monmouth County · Shore · <a href="#">NJ Local</a></div>
+</footer>
+
+</body>
+</html>

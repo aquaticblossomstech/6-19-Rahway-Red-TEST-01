@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Ways To Read — Elizabeth, NJ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+    <style>
+        :root {
+            --bg: #07080f;
+            --surface: #0b0c18;
+            --surface-2: #0f1022;
+            --border: rgba(255,255,255,0.07);
+            --border-strong: rgba(255,255,255,0.13);
+            --text: #eae8f2;
+            --muted: rgba(234,232,242,0.50);
+            --muted-strong: rgba(234,232,242,0.72);
+
+            /* Elizabeth color tokens */
+            /* The port is rust and container-blue.
+               The city is warm concrete and immigrant-yellow.
+               The tension is sovereign-red. */
+            --rust:      #c84b11;   /* port / industrial / founding */
+            --container: #1a6fa8;   /* global logistics / trade */
+            --amber:     #e8a020;   /* community / warmth / labor */
+            --sovereign: #d63a5a;   /* detention / governance / contradiction */
+            --lime:      #8fce3c;   /* survival / growth / resilience */
+
+            --prismatic: linear-gradient(90deg,
+                #c84b11 0%,
+                #e8a020 25%,
+                #1a6fa8 50%,
+                #d63a5a 75%,
+                #8fce3c 100%
+            );
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-style: normal !important;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 17px;
+            line-height: 1.78;
+            overflow-x: hidden;
+        }
+
+        /* ─── PULSE ─────────────────────────────────── */
+        .pulse {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--prismatic);
+            background-size: 300% 100%;
+            animation: flow 16s linear infinite;
+            z-index: 200;
+        }
+
+        @keyframes flow {
+            0%   { background-position: 0% 50%; }
+            100% { background-position: 300% 50%; }
+        }
+
+        @keyframes tidal {
+            0%, 100% { opacity: 0.35; }
+            50%       { opacity: 1; }
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(14px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ─── NAV ───────────────────────────────────── */
+        nav {
+            position: fixed;
+            top: 3px; left: 0; right: 0;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            background: rgba(7,8,15,0.94);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            z-index: 199;
+        }
+
+        .nav-brand {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 0.15em;
+            background: var(--prismatic);
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: flow 16s linear infinite;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.4rem;
+        }
+
+        .nav-tag {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.58rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .nav-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--amber);
+            animation: tidal 4s ease-in-out infinite;
+        }
+
+        /* ─── HERO ──────────────────────────────────── */
+        .hero {
+            padding: 114px 2rem 4rem;
+            max-width: 960px;
+            margin: 0 auto;
+            border-bottom: 1px solid var(--border);
+            animation: fadeUp 0.65s ease both;
+        }
+
+        .hero-eyebrow {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 0.26em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 1.6rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-eyebrow span { opacity: 0.5; }
+        .hero-eyebrow strong { color: var(--amber); font-weight: 500; opacity: 1; }
+
+        .hero h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.8rem, 8vw, 7.2rem);
+            line-height: 0.9;
+            letter-spacing: 0.02em;
+        }
+
+        .hero h1 .line1 { display: block; color: var(--text); }
+        .hero h1 .line2 {
+            display: block;
+            background: var(--prismatic);
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: flow 16s linear infinite;
+        }
+
+        .hero-sub {
+            margin-top: 2rem;
+            font-size: 1.08rem;
+            color: var(--muted-strong);
+            max-width: 62ch;
+            line-height: 1.88;
+        }
+
+        /* Signature visual motif for Elizabeth:
+           a "LAYERS" stack — four labeled strata showing the city's compression */
+        .strata-stack {
+            margin-top: 2.6rem;
+            border: 1px solid var(--border-strong);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .stratum {
+            display: flex;
+            align-items: center;
+            gap: 1.4rem;
+            padding: 0.75rem 1.2rem;
+            border-bottom: 1px solid var(--border);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.62rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        .stratum:last-child { border-bottom: none; }
+
+        .stratum-bar {
+            width: 10px;
+            flex-shrink: 0;
+            border-radius: 1px;
+        }
+
+        .stratum:nth-child(1) .stratum-bar { background: var(--rust);      height: 22px; }
+        .stratum:nth-child(2) .stratum-bar { background: var(--container); height: 18px; }
+        .stratum:nth-child(3) .stratum-bar { background: var(--amber);     height: 26px; }
+        .stratum:nth-child(4) .stratum-bar { background: var(--sovereign); height: 14px; }
+        .stratum:nth-child(5) .stratum-bar { background: var(--lime);      height: 16px; }
+
+        .stratum-label { color: var(--muted-strong); }
+        .stratum-note  { color: var(--muted); margin-left: auto; font-size: 0.56rem; letter-spacing: 0.08em; }
+
+        /* ─── ZERO POINT ────────────────────────────── */
+        .zero-point {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .zero-point-inner {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            display: grid;
+            grid-template-columns: 160px 1fr;
+            gap: 2.5rem;
+            align-items: start;
+        }
+
+        .zero-label-col .zero-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.58rem;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            color: var(--sovereign);
+        }
+
+        .zero-label-col .zero-sub {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.52rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-top: 0.5rem;
+            line-height: 1.65;
+        }
+
+        .zero-content {
+            font-size: 1.1rem;
+            color: var(--muted-strong);
+            line-height: 1.88;
+            border-left: 2px solid var(--sovereign);
+            padding-left: 1.4rem;
+        }
+
+        .zero-content strong { color: var(--text); font-weight: 500; }
+
+        /* ─── GOVERNING PHENOMENON ──────────────────── */
+        .governing {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 2.2rem 2rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 2rem;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+
+        .governing-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.58rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--muted);
+            flex-shrink: 0;
+        }
+
+        .governing-phrase {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.4rem;
+            letter-spacing: 0.08em;
+            color: var(--amber);
+        }
+
+        /* ─── READS ─────────────────────────────────── */
+        .reads {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .read-block {
+            padding: 4rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .read-block:last-of-type { border-bottom: none; }
+
+        .read-header {
+            display: flex;
+            align-items: baseline;
+            gap: 1.2rem;
+            margin-bottom: 2.2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .read-num {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.58rem;
+            letter-spacing: 0.22em;
+            color: var(--muted);
+            flex-shrink: 0;
+        }
+
+        .read-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            letter-spacing: 0.06em;
+            line-height: 1;
+        }
+
+        .c-rust      { color: var(--rust); }
+        .c-container { color: var(--container); }
+        .c-amber     { color: var(--amber); }
+        .c-sovereign { color: var(--sovereign); }
+        .c-lime      { color: var(--lime); }
+        .c-prismatic {
+            background: var(--prismatic);
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: flow 16s linear infinite;
+        }
+
+        /* syntax blocks */
+        .syn { margin-bottom: 1.8rem; }
+        .syn:last-child { margin-bottom: 0; }
+
+        .syn-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.56rem;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            margin-bottom: 0.7rem;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            color: var(--muted);
+        }
+
+        .syn-label::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .lbl-observed { color: var(--text); }
+        .lbl-read     { color: var(--muted-strong); }
+        .lbl-exercise { color: var(--amber); }
+        .lbl-open     { color: var(--sovereign); }
+
+        .syn-text {
+            font-size: 1.03rem;
+            line-height: 1.83;
+            color: var(--muted-strong);
+        }
+
+        .syn-text strong { color: var(--text); font-weight: 500; }
+
+        .exercise-box {
+            background: rgba(255,255,255,0.022);
+            border: 1px solid rgba(232,160,32,0.22);
+            border-radius: 4px;
+            padding: 1.2rem 1.4rem;
+            margin-top: 0.5rem;
+        }
+
+        /* ─── LAYERING CALLOUT (signature motif) ───── */
+        /* Shows the same block of land holding multiple
+           simultaneous realities — a visual compression diagram */
+        .compression-diagram {
+            border: 1px solid var(--border-strong);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 0.6rem;
+        }
+
+        .compression-row {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.88rem;
+            line-height: 1.6;
+        }
+
+        .compression-row:last-child { border-bottom: none; }
+
+        .compression-key {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.57rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            padding: 0.9rem 1rem;
+            border-right: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+        }
+
+        .compression-val {
+            padding: 0.9rem 1.2rem;
+            color: var(--muted-strong);
+        }
+
+        .key-rust      { color: var(--rust);      background: rgba(200,75,17,0.05); }
+        .key-container { color: var(--container); background: rgba(26,111,168,0.05); }
+        .key-amber     { color: var(--amber);     background: rgba(232,160,32,0.05); }
+        .key-sovereign { color: var(--sovereign); background: rgba(214,58,90,0.05); }
+        .key-lime      { color: var(--lime);      background: rgba(143,206,60,0.05); }
+
+        /* ─── OPEN QUESTION ─────────────────────────── */
+        .open-question {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+        }
+
+        .open-question-inner {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 3.5rem 2rem;
+        }
+
+        .oq-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.58rem;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            color: var(--sovereign);
+            margin-bottom: 1.2rem;
+        }
+
+        .oq-text {
+            font-size: 1.16rem;
+            color: var(--muted-strong);
+            max-width: 60ch;
+            line-height: 1.88;
+        }
+
+        .oq-text strong { color: var(--text); font-weight: 500; }
+
+        /* ─── FOOTER ────────────────────────────────── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 2.2rem 2rem;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .footer-id {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.57rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--muted);
+            line-height: 2;
+        }
+
+        .footer-doctrine {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.52rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--muted);
+            opacity: 0.45;
+            text-align: right;
+            line-height: 2.1;
+        }
+
+        /* ─── RESPONSIVE ────────────────────────────── */
+        @media (max-width: 680px) {
+            .zero-point-inner { grid-template-columns: 1fr; gap: 1rem; }
+            .compression-row  { grid-template-columns: 1fr; }
+            .compression-key  { border-right: none; border-bottom: 1px solid var(--border); }
+            .footer-inner     { flex-direction: column; }
+            .footer-doctrine  { text-align: left; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .pulse, .nav-brand, .hero h1 .line2, .c-prismatic { animation: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="pulse"></div>
+
+<nav>
+    <div class="nav-brand">NJ LOCAL · WAYS TO READ</div>
+    <div class="nav-right">
+        <span class="nav-tag">Field Page · Union County</span>
+        <div class="nav-dot"></div>
+    </div>
+</nav>
+
+<!-- ─── HERO ─────────────────────────────────────── -->
+<section class="hero">
+    <div class="hero-eyebrow">
+        <span>Field Page</span>
+        <strong>Elizabeth · Union County</strong>
+        <span>The Compressed City</span>
+    </div>
+    <h1>
+        <span class="line1">Ways To Read</span>
+        <span class="line2">Elizabeth</span>
+    </h1>
+    <p class="hero-sub">
+        Elizabeth is the oldest city in New Jersey and one of the most structurally dense in the country. It holds a deep-water port, an international airport, a federal immigration detention center, one of the most diverse populations in America, and a founding-era history — all within 12 square miles. None of these things are narrated together. That silence is the anomaly.
+    </p>
+
+    <!-- SIGNATURE VISUAL: Strata stack — the layered city -->
+    <div class="strata-stack">
+        <div class="stratum">
+            <div class="stratum-bar"></div>
+            <span class="stratum-label">Port / Freight / Global Trade</span>
+            <span class="stratum-note">8.9M TEUs annually · Maersk lease extended to 2062</span>
+        </div>
+        <div class="stratum">
+            <div class="stratum-bar"></div>
+            <span class="stratum-label">Aviation / Transit Corridor</span>
+            <span class="stratum-note">Newark Liberty borders Elizabeth to the north</span>
+        </div>
+        <div class="stratum">
+            <div class="stratum-bar"></div>
+            <span class="stratum-label">Immigrant Community · Cultural Density</span>
+            <span class="stratum-note">Colombian, Puerto Rican, Cuban, Portuguese, Central American</span>
+        </div>
+        <div class="stratum">
+            <div class="stratum-bar"></div>
+            <span class="stratum-label">Federal Detention Infrastructure</span>
+            <span class="stratum-note">Elizabeth Detention Center · 30+ years in operation</span>
+        </div>
+        <div class="stratum">
+            <div class="stratum-bar"></div>
+            <span class="stratum-label">Colonial Founding Layer · Revolutionary History</span>
+            <span class="stratum-note">First capital of NJ · Hamilton, Dayton, Continental Congress</span>
+        </div>
+    </div>
+</section>
+
+<!-- ─── ZERO POINT ────────────────────────────────── -->
+<section class="zero-point">
+    <div class="zero-point-inner">
+        <div class="zero-label-col">
+            <div class="zero-label">Zero Point</div>
+            <div class="zero-sub">The anomaly<br>that earns<br>the reading</div>
+        </div>
+        <div class="zero-content">
+            Elizabeth, New Jersey contains a <strong>federal immigration detention center</strong> — a facility that has operated for over thirty years, detaining people seeking entry into the United States — located within a city that is itself <strong>majority immigrant</strong>, positioned directly adjacent to the port through which a significant fraction of American consumer goods enters the country, and less than two miles from an international airport. The people being held inside the detention facility and the people moving goods through the port and the people living in the surrounding neighborhoods are often from the same countries of origin. This geographic fact is not an accident. It is the structure of the city made visible.
+        </div>
+    </div>
+</section>
+
+<!-- ─── GOVERNING PHENOMENON ─────────────────────── -->
+<div class="governing">
+    <span class="governing-label">Governing Phenomenon</span>
+    <span class="governing-phrase">Simultaneous Presence And Erasure</span>
+</div>
+
+<!-- ─── READS ─────────────────────────────────────── -->
+<div class="reads">
+
+    <!-- 01 Port Read -->
+    <div class="read-block" id="port">
+        <div class="read-header">
+            <span class="read-num">Read 01</span>
+            <h2 class="read-title c-rust">The Port Read</h2>
+        </div>
+
+        <div class="syn">
+            <div class="syn-label lbl-observed">Observed</div>
+            <div class="syn-text">
+                The Port of New York and New Jersey — physically straddling Elizabeth and Newark — is the busiest port on the East Coast. In 2025, it moved 8.9 million TEUs (twenty-foot equivalent units — the standard measure of shipping container volume). Maersk, through APM Terminals, has a lease on the Elizabeth terminal extended through <strong>December 2062</strong>. Port Newark Container Terminal occupies 272 acres and connects to more than 12 rail destinations across the continental United States and Canada. The Port Authority of New York and New Jersey, which oversees this infrastructure, is a bi-state agency — governed jointly by New York and New Jersey, headquartered in New York.
+            </div>
+        </div>
+
+        <div class="syn">
+            <div class="syn-label lbl-read">Read</div>
+            <div class="syn-text">
+                A significant fraction of what Americans buy enters the country through Elizabeth. The cranes, the containers, the railheads are the physical infrastructure of American consumption — and they are located in one of the most underrepresented cities in the national media landscape. The people who live closest to this machinery of global trade are not the people profiting most from it. The lease runs to 2062. <strong>Elizabeth will be hosting this operation for the next 36 years regardless of what happens to the surrounding neighborhoods.</strong> That is a committed future that the city did not fully author.
+            </div>
+        </div>
+
+        <div class="syn">
+            <div class="syn-label lbl-exercise">Field Exercise</div>
+            <div class="exercise-box syn-text">
+                Stand on the Route 1&9 overpass where it crosses the port perimeter and watch the crane operations. Count the number of containers moved in ten minutes. Then drive three blocks into a residential neighborhood and observe the housing stock, the corner stores, the language of the signage. The distance between those two realities is Elizabeth's structural condition in physical form.
+            </div>
+        </div>
+    </div>
+
+    <!-- 02 Compression Read -->
+    <div class="read-block" id="compression">
+        <div class="read-header">
+            <span class="read-num">Read 02</span>
+            <h2 class="read-title c-container">The Compression Read</h2>
+        </div>
+
+        <div class="syn">
+            <div class="syn-label lbl-observed">Observed</div>
+            <div class="syn-text">
+                Within Elizabeth's 12.3 square miles exist simultaneously: a deep-water container port, an international airport (Newark Liberty's footprint runs along the city's northern boundary), a federal immigration detention facility, the Elizabethtown colonial settlement site (first capital of New Jersey), a downtown with NJ Transit rail access to Penn Station in under 35 minutes, and neighborhoods with some of the highest immigrant-population density in the state. No single narrative of Elizabeth holds all of these things at once.
+            </div>
+        </div>
+
+        <div class="syn">
+            <div class="syn-label lbl-read">Read</div>
+            <div class="syn-text">
+                The compression diagram below is not a metaphor. It is a spatial fact. These layers coexist at the same address, in the same zip codes, visible from the same corner. The city is what happens when global logistics infrastructure, 18th-century colonial settlement patterns, waves of immigrant resettlement, and federal enforcement geography are stacked on top of each other across three centuries — and no single renovation project or narrative rebranding has fully resolved the contradictions because <strong>the contradictions are structural, not cosmetic.</strong>
+            </div>
+        </div>
+
+        <div class="compression-diagram">
+            <div class="compression-row">
+                <div class="compression-key key-rust">Founding Layer</div>
+                <div class="compression-val">First capital of New Jersey. Continental Congress delegates. Alexander Hamilton lived here. Jonathan Dayton — signer of the Constitution — is from Elizabeth. The city predates the United States.</div>
+            </div>
+            <div class="compression-row">
+                <div class="compression-key key-container">Logistics Layer</div>
+                <div class="compression-val">One of the largest container port operations on the Atlantic seaboard. Rail connections to 12+ continental destinations. Freight infrastructure that will operate until at least 2062.</div>
+            </div>
+            <div class="compression-row">
+                <div class="compression-key key-amber">Community Layer</div>
+                <div class="compression-val">Colombian, Cuban, Puerto Rican, Portuguese, Central American communities with generational roots. An IRC office supporting refugee resettlement. Multiple parishes serving immigrant congregations in multiple languages.</div>
+            </div>
+            <div class="compression-row">
+                <div class="compression-key key-sovereign">Enforcement Layer</div>
+                <div class="compression-val">A federal immigration detention center that has operated for over 30 years. Studied by Rutgers scholars as a 30-year index of U.S. immigration policy. Located within a majority-immigrant city.</div>
+            </div>
+            <div class="compression-row">
+                <div class="compression-key key-lime">Transit Layer</div>
+                <div class="compression-val">NJ Transit North Jersey Coast and Northeast Corridor service. Under 35 minutes to Penn Station. The Secaucus junction system that failed during the World Cup runs through this corridor.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 03 Immigrant City Read -->
+    <div class="read-block" id="immigrant">
+        <div class="read-header">
+            <span class="read-num">Read 03</span>
+            <h2 class="read-title c-amber">The Immigrant City Read</h2>
+        </div>
+
+        <div class="syn">
+            <div class="syn-label lbl-observed">Observed</div>
+            <div class="syn-text">
+                Elizabeth's Latino population includes long-established Cuban, Colombian, Puerto Rican, and Central American communities with distinct and often competing civic histories. Cubans arrived in significant numbers in the 1960s and established a commercial district that gave them early political capital. Colombians arrived in the 1970s and encountered a city already organized around prior ethnic hierarchies. Puerto Ricans, as U.S. citizens, occupied a different legal category than other immigrant groups but faced similar social positioning. The International Rescue Committee has operated in Elizabeth for over 40 years, providing resettlement services to refugees and asylees from countries across the globe. Our Lady of Fatima parish was founded in 1973 specifically to serve the Portuguese-speaking community.
+            </div>
+        </div>
+
+        <div class="syn">
+            <div class="syn-label lbl-read">Read</div>
+            <div class="syn-text">
+                Elizabeth is not a monoculture immigrant story. It is a compressed archive of multiple waves of arrival, each encountering the infrastructure left by the previous wave. The Rutgers research on Colombian-American community memory documents how ethnic hierarchies formed within the city's Latino community itself — shaped by proximity to whiteness, business ownership patterns, and who arrived first. <strong>Elizabeth's diversity is not frictionless coexistence. It is a dense, layered negotiation that has been ongoing for over a century</strong> — and is still ongoing, invisibly, on blocks that look, from the outside, like a single undifferentiated neighborhood.
+            </div>
+        </div>
+
+        <div class="syn">
+            <div class="syn-label lbl-exercise">Field Exercise</div>
+            <div class="exercise-box syn-text">
+                Walk three blocks of the same street in Elizabeth's downtown. Note the languages on storefronts, the country-of-origin flags, the names of the businesses. Then note which communities appear to have larger commercial footprints versus which are represented only by smaller operations or service businesses. The distribution of commercial visibility is a map of the city's internal hierarchy — not its official story.
+            </div>
+        </div>
+    </div>
+
+    <!-- 04 Detention Read -->
+    <div class="read-block" id="detention">
+        <div class="read-header">
+            <span class="read-num">Read 04</span>
+            <h2 class="read-title c-sovereign">The Detention Read</h2>
+        </div>
+
+        <div class="syn">
+            <div class="syn-label lbl-observed">Observed</div>
+            <div class="syn-text">
+                The Elizabeth Contract Detention Facility has operated for over 30 years, run under contract by a private corporation on behalf of the federal government. A 2023 Rutgers University symposium examined its history and concluded that the facility functions as a 30-year index of U.S. immigration enforcement policy — that reading what has happened at Elizabeth over that period gives an accurate picture of how the country has managed immigration as a political and legal category. The facility is located in a city where a substantial portion of the population is itself immigrant or the descendant of immigrants. New Jersey entered into a legal dispute with the private operator of the facility over conditions of detention.
+            </div>
+        </div>
+
+        <div class="syn">
+            <div class="syn-label lbl-read">Read</div>
+            <div class="syn-text">
+                The detention center is the most direct expression of Elizabeth's governing phenomenon: simultaneous presence and erasure. The people inside the facility are physically present in Elizabeth — they are here, in this city — and they are administratively invisible to it. They do not receive city services in any conventional sense. They do not appear in Elizabeth's civic narrative. They are present in the city's geography and absent from its self-description. This is not unique to Elizabeth — it is how detention facilities function by design. But in Elizabeth, where the surrounding community is so directly related to the populations being detained, the gap between physical presence and civic invisibility is <strong>unusually concentrated and unusually readable.</strong>
+            </div>
+        </div>
+
+        <div class="syn">
+            <div class="syn-label lbl-exercise">Field Exercise</div>
+            <div class="exercise-box syn-text">
+                Locate the detention facility on a map of Elizabeth. Then locate the port. Then locate the nearest NJ Transit station. Then locate the nearest parish that holds Mass in Spanish or Portuguese. Draw the distances. Consider what it means that these four infrastructures — enforcement, logistics, transit, community — exist within the same municipal boundary, largely unacknowledged as a system.
+            </div>
+        </div>
+    </div>
+
+    <!-- 05 Founding Read -->
+    <div class="read-block" id="founding">
+        <div class="read-header">
+            <span class="read-num">Read 05</span>
+            <h2 class="read-title c-lime">The Founding Read</h2>
+        </div>
+
+        <div class="syn">
+            <div class="syn-label lbl-observed">Observed</div>
+            <div class="syn-text">
+                Elizabeth is the oldest city in New Jersey. It served as the state's first capital. Jonathan Dayton, the youngest signer of the U.S. Constitution, was from Elizabeth — Dayton, Ohio is named for him. Alexander Hamilton lived here. Continental Congress delegates William Brunet and Abraham Clark were residents. Boxwood Hall, a colonial-era mansion, survives as a historic site connected to the Revolutionary War period. The city's official name descends from Elizabethtown, a settlement established in 1664.
+            </div>
+        </div>
+
+        <div class="syn">
+            <div class="syn-label lbl-read">Read</div>
+            <div class="syn-text">
+                The founding layer is present in Elizabeth the way sediment is present in a riverbed — it is there if you look, mostly invisible from the surface. The city that produced Constitutional signers and Revolutionary War figures now holds a federal detention facility and one of the most globally transient port complexes in the Western Hemisphere. The founding narrative and the present-tense reality share an address and almost no cognitive overlap. <strong>Elizabeth's history is not a story of what the city became after its founding moment. It is a story of what kept arriving after the founding layer was laid down.</strong> The founding didn't finish the city. It only started it.
+            </div>
+        </div>
+
+        <div class="syn">
+            <div class="syn-label lbl-exercise">Field Exercise</div>
+            <div class="exercise-box syn-text">
+                Visit Boxwood Hall. Read the historical signage. Then, without moving your feet, turn 180 degrees and observe what is visible from that position — the commercial corridor, the infrastructure, the skyline elements. You are standing at a point where 1664 and 2026 are in the same sightline. That coexistence is Elizabeth's operating condition, not a contradiction to be resolved.
+            </div>
+        </div>
+    </div>
+
+    <!-- 06 Invisibility Read -->
+    <div class="read-block" id="invisibility">
+        <div class="read-header">
+            <span class="read-num">Read 06</span>
+            <h2 class="read-title c-prismatic">The Invisibility Read</h2>
+        </div>
+
+        <div class="syn">
+            <div class="syn-label lbl-observed">Observed</div>
+            <div class="syn-text">
+                Elizabeth is 12 minutes from Newark Penn Station by NJ Transit. It shares a border with the state's largest city and sits beneath the flight path of one of its three major airports. During the 2026 FIFA World Cup, it was identified in transit guidance as a boarding point — fans from the Elizabeth train station could connect to the Secaucus route to MetLife Stadium. Elizabeth appears in regional transportation maps as a node. It rarely appears in regional cultural narratives as a subject.
+            </div>
+        </div>
+
+        <div class="syn">
+            <div class="syn-label lbl-read">Read</div>
+            <div class="syn-text">
+                Elizabeth is one of the most infrastructure-dense cities in New Jersey and one of the least editorially covered. It appears in logistics reporting, in immigration enforcement reporting, in transit routing information — but rarely as a place people write about in terms of what it is to live there, what it looks like from inside, what its contradictions feel like at street level. This is not an accident of geography or complexity. It is a consistent pattern of which cities get read and which cities get used. <strong>Elizabeth gets used. As a port. As a transit node. As a detention site. As a labor market. The city that does the work rarely receives the narrative.</strong> This is, notably, the same pattern Elizabeth's relationship with New York has encoded for over two centuries.
+            </div>
+        </div>
+
+        <div class="syn">
+            <div class="syn-label lbl-exercise">Field Exercise</div>
+            <div class="exercise-box syn-text">
+                Search your preferred news source for "Elizabeth, NJ" coverage over the past 12 months. Note the categories: detention, crime, transportation, infrastructure, transit. Then note what is absent: cultural life, civic history, neighborhood change, community self-description. The shape of what is missing is a reading of Elizabeth too — it just requires noticing the silence rather than the signal.
+            </div>
+        </div>
+    </div>
+
+</div><!-- /reads -->
+
+<!-- ─── OPEN QUESTION ─────────────────────────────── -->
+<section class="open-question">
+    <div class="open-question-inner">
+        <div class="oq-label">Open Question</div>
+        <div class="oq-text">
+            Elizabeth contains the infrastructure of American arrival — the port where goods enter, the airport where people land, the detention center where certain arrivals are held — and it also contains the communities most directly shaped by that infrastructure, including people from the same countries whose goods and whose family members move through these systems. The question Elizabeth poses is not whether these systems are just or unjust. It is more structural than that: <strong>what does it mean that a single city is simultaneously the site of global commerce, federal enforcement, revolutionary founding, and one of the most diverse communities in the state — and that all of this is treated as separate stories, or no story at all?</strong>
+        </div>
+    </div>
+</section>
+
+<!-- ─── FOOTER ─────────────────────────────────────── -->
+<footer>
+    <div class="footer-inner">
+        <div class="footer-id">
+            Ways To Read · Elizabeth, NJ<br>
+            Field Page · Union County · The Compressed City<br>
+            Governing Phenomenon: Simultaneous Presence And Erasure<br>
+            Garden State Grid · NJ Local
+        </div>
+        <div class="footer-doctrine">
+            NO ADVICE · NO DIAGNOSIS<br>
+            NO RESOLUTION · NO SCORING
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

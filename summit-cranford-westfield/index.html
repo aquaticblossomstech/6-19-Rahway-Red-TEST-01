@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Circuit Report — Summit · Cranford · Westfield</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-style:normal}
+
+:root{
+  --bg:#07070b;
+  --surf:#0c0c13;
+  --surf2:#101019;
+  --line:rgba(255,255,255,.07);
+  --line2:rgba(255,255,255,.13);
+  --ink:#edeaf8;
+  --soft:rgba(237,234,248,.72);
+  --dim:rgba(237,234,248,.44);
+
+  /* node colors — each town earns its tone */
+  --sum:#d4a847;      /* Summit: gold — elevation, prestige, hospital on the hill */
+  --sum-lt:#f0cc7a;
+  --cra:#3b82f6;      /* Cranford: blue — river, floods, working neighborhood, resilience */
+  --cra-lt:#93c5fd;
+  --wes:#c084fc;      /* Westfield: violet — commercial apex, density, the model town */
+  --wes-lt:#e2b4ff;
+
+  --circuit:linear-gradient(90deg,#d4a847 0%,#3b82f6 50%,#c084fc 100%);
+  --circuit-full:linear-gradient(90deg,#d4a847 0%,#f0cc7a 18%,#3b82f6 44%,#93c5fd 62%,#c084fc 82%,#e2b4ff 100%);
+}
+
+@keyframes flow{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+@keyframes tidal{0%,100%{opacity:.35}50%{opacity:1}}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+html{font-size:18px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;font-weight:400;line-height:1.78;overflow-x:hidden}
+
+body::before{
+  content:'';position:fixed;top:0;left:0;width:100%;height:100%;
+  pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);
+  background-size:56px 56px;
+}
+
+.pulse{position:fixed;top:0;left:0;right:0;height:3px;background:var(--circuit-full);background-size:200% 100%;animation:flow 11s linear infinite;z-index:300}
+
+nav{position:fixed;top:3px;left:0;right:0;height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;background:rgba(7,7,11,.94);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);z-index:299}
+.nav-brand{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.18em;background:var(--circuit-full);background-size:200% 100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:flow 11s linear infinite}
+.nav-right{display:flex;align-items:center;gap:1.4rem}
+.nav-tag{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+.nav-dot{width:6px;height:6px;border-radius:50%;background:var(--wes);animation:tidal 3.5s ease-in-out infinite}
+
+/* HERO */
+.hero{position:relative;z-index:10;padding:118px 2rem 5rem;max-width:1060px;margin:0 auto;border-bottom:1px solid var(--line);animation:up .65s ease both}
+.circuit-id{font-family:'DM Mono',monospace;font-size:.57rem;letter-spacing:.28em;text-transform:uppercase;color:var(--dim);margin-bottom:2rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.circuit-id::before{content:'';width:22px;height:1px;background:var(--dim)}
+
+h1{font-family:'Bebas Neue',sans-serif;line-height:.88;letter-spacing:.02em}
+.h1-sub{font-size:clamp(1rem,2.4vw,1.55rem);color:var(--dim);letter-spacing:.2em;display:block;margin-bottom:.3em}
+.h1-main{font-size:clamp(2.8rem,7.5vw,6.5rem);display:block;background:var(--circuit-full);background-size:200% 100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:flow 11s linear infinite}
+
+.hero-body{margin-top:2.2rem;font-size:1.1rem;color:var(--soft);max-width:62ch;line-height:1.88}
+.hero-body strong{color:var(--ink);font-weight:500}
+
+/* NODE CONNECTOR */
+.connector{position:relative;z-index:10;max-width:1060px;margin:2.4rem auto 0;padding:0 2rem;display:flex;align-items:center;gap:0;animation:up .8s .1s ease both}
+.node-pip{display:flex;flex-direction:column;align-items:center;gap:8px;flex:0 0 auto}
+.pip-dot{width:14px;height:14px;border-radius:50%;border:2px solid}
+.pip-dot.sum{border-color:var(--sum);background:rgba(212,168,71,.25);box-shadow:0 0 14px rgba(212,168,71,.5)}
+.pip-dot.cra{border-color:var(--cra);background:rgba(59,130,246,.25);box-shadow:0 0 14px rgba(59,130,246,.5)}
+.pip-dot.wes{border-color:var(--wes);background:rgba(192,132,252,.25);box-shadow:0 0 14px rgba(192,132,252,.5)}
+.pip-label{font-family:'Bebas Neue',sans-serif;font-size:.95rem;letter-spacing:.1em}
+.pip-label.sum{color:var(--sum-lt)}
+.pip-label.cra{color:var(--cra-lt)}
+.pip-label.wes{color:var(--wes-lt)}
+.pip-sub{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);text-align:center;line-height:1.5}
+.conn-line{flex:1;height:2px;background:var(--line2);position:relative;overflow:hidden;margin:0 4px}
+.conn-line::after{content:'';position:absolute;top:0;left:0;height:100%;width:30%;background:var(--circuit-full);background-size:300% 100%;animation:flow 3s linear infinite}
+
+/* CIRCUIT QUESTION */
+.cq{position:relative;z-index:10;background:var(--surf);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:3rem}
+.cq-in{max-width:1060px;margin:0 auto;padding:3rem 2rem;display:grid;grid-template-columns:180px 1fr;gap:2.4rem;align-items:start}
+@media(max-width:640px){.cq-in{grid-template-columns:1fr;gap:1.2rem}}
+.cq-label{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.26em;text-transform:uppercase;color:var(--sum-lt)}
+.cq-sub{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-top:.5rem;line-height:1.7}
+.cq-body{font-size:1.14rem;color:var(--soft);line-height:1.88;border-left:2px solid var(--sum);padding-left:1.4rem}
+.cq-body strong{color:var(--ink);font-weight:500}
+
+/* NODES */
+.node-section{position:relative;z-index:10;max-width:1060px;margin:0 auto;padding:0 2rem}
+.node-block{padding:4.5rem 0;border-bottom:1px solid var(--line)}
+
+.node-hdr{display:grid;grid-template-columns:auto 1fr;gap:1.6rem;align-items:start;margin-bottom:2.8rem;padding-bottom:1.4rem;border-bottom:1px solid var(--line)}
+.node-letter{font-family:'Bebas Neue',sans-serif;font-size:6rem;line-height:1;opacity:.18}
+.node-letter.sum{color:var(--sum)}
+.node-letter.cra{color:var(--cra)}
+.node-letter.wes{color:var(--wes)}
+.node-meta{display:flex;flex-direction:column;justify-content:center;gap:.4rem}
+.node-tag{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.22em;text-transform:uppercase;color:var(--dim)}
+.node-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,4vw,3rem);letter-spacing:.04em;line-height:1}
+.node-title.sum{color:var(--sum-lt)}
+.node-title.cra{color:var(--cra-lt)}
+.node-title.wes{color:var(--wes-lt)}
+.node-role{font-family:'DM Mono',monospace;font-size:.57rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+
+.syn{margin-bottom:2rem}
+.syn:last-child{margin-bottom:0}
+.syn-label{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.24em;text-transform:uppercase;margin-bottom:.8rem;display:flex;align-items:center;gap:.7rem}
+.syn-label::after{content:'';flex:1;height:1px;background:var(--line)}
+.lbl-zp{color:var(--sum)}
+.lbl-obs{color:var(--ink)}
+.lbl-read{color:var(--soft)}
+.lbl-ex{color:var(--cra-lt)}
+.lbl-inv{color:var(--wes-lt)}
+.syn-text{font-size:1rem;line-height:1.83;color:var(--soft)}
+.syn-text strong{color:var(--ink);font-weight:500}
+.ex-box{background:rgba(255,255,255,.02);border:1px solid rgba(59,130,246,.18);border-radius:4px;padding:1.2rem 1.4rem;margin-top:.5rem}
+.inv-box{background:rgba(255,255,255,.018);border:1px solid rgba(192,132,252,.2);border-radius:4px;padding:1rem 1.2rem;margin-top:.5rem;font-family:'DM Mono',monospace;font-size:.8rem;line-height:1.65;color:var(--dim)}
+.inv-box strong{color:var(--wes-lt);font-weight:500;font-family:'DM Sans',sans-serif;font-size:.88rem}
+
+/* CIRCUIT DYNAMICS */
+.dynamics{position:relative;z-index:10;max-width:1060px;margin:0 auto;padding:3rem 2rem;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.dyn-title{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.1em;color:var(--dim);margin-bottom:1.6rem}
+.dyn-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+@media(max-width:700px){.dyn-flow{grid-template-columns:1fr 1fr}}
+.dyn-step{background:var(--surf);padding:1.4rem 1.2rem;border-right:1px solid var(--line);position:relative}
+.dyn-step:last-child{border-right:none}
+.dyn-step::after{content:'→';position:absolute;right:-1px;top:50%;transform:translateY(-50%);font-size:1.2rem;color:var(--line2);z-index:2}
+.dyn-step:last-child::after{display:none}
+.dyn-node{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.18em;text-transform:uppercase;margin-bottom:.6rem}
+.dyn-step:nth-child(1) .dyn-node{color:var(--sum-lt)}
+.dyn-step:nth-child(2) .dyn-node{color:var(--cra-lt)}
+.dyn-step:nth-child(3) .dyn-node{color:var(--wes-lt)}
+.dyn-step:nth-child(4) .dyn-node{color:var(--sum-lt)}
+.dyn-name{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.06em;color:var(--ink);margin-bottom:.5rem}
+.dyn-desc{font-size:.82rem;color:var(--soft);line-height:1.6}
+
+/* TENSIONS */
+.tensions{position:relative;z-index:10;background:var(--surf);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.tensions-in{max-width:1060px;margin:0 auto;padding:3rem 2rem}
+.ten-hdr{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:.08em;color:var(--soft);margin-bottom:2rem}
+.ten-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.2rem}
+@media(max-width:700px){.ten-grid{grid-template-columns:1fr}}
+.tension{border:1px solid var(--line);border-radius:8px;padding:1.6rem 1.4rem;background:var(--surf2)}
+.tension-label{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.18em;text-transform:uppercase;color:var(--sum-lt);margin-bottom:.8rem}
+.tension h4{font-family:'Bebas Neue',sans-serif;font-size:1.25rem;letter-spacing:.05em;color:var(--ink);margin-bottom:.7rem;line-height:1.1}
+.tension p{font-size:.88rem;color:var(--soft);line-height:1.7}
+.tension p strong{color:var(--ink);font-weight:500}
+
+/* OPEN QUESTION */
+.oq{position:relative;z-index:10;max-width:1060px;margin:0 auto;padding:4rem 2rem}
+.oq-label{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.26em;text-transform:uppercase;color:var(--sum);margin-bottom:1.2rem}
+.oq-text{font-size:1.14rem;color:var(--soft);max-width:62ch;line-height:1.9}
+.oq-text strong{color:var(--ink);font-weight:500}
+
+/* COMPARISON PANEL — unique to this circuit */
+.comparison{position:relative;z-index:10;max-width:1060px;margin:0 auto;padding:3rem 2rem;border-bottom:1px solid var(--line)}
+.comp-label{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.24em;text-transform:uppercase;color:var(--dim);margin-bottom:1.4rem}
+.comp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+@media(max-width:600px){.comp-grid{grid-template-columns:1fr}}
+.comp-cell{background:var(--surf2);padding:1.6rem 1.4rem}
+.comp-town{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;margin-bottom:.8rem}
+.comp-cell.s .comp-town{color:var(--sum-lt)}
+.comp-cell.c .comp-town{color:var(--cra-lt)}
+.comp-cell.w .comp-town{color:var(--wes-lt)}
+.comp-cell h4{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.05em;color:var(--ink);margin-bottom:.6rem}
+.comp-cell p{font-size:.87rem;color:var(--soft);line-height:1.7}
+
+footer{position:relative;z-index:10;border-top:1px solid var(--line);padding:2.2rem 2rem;max-width:1060px;margin:0 auto}
+.foot-in{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1.5rem}
+.foot-id{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);line-height:2.1}
+.foot-doc{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);opacity:.4;text-align:right;line-height:2.2}
+
+@media(max-width:680px){
+  html{font-size:16px}
+  .node-hdr{grid-template-columns:1fr}
+  .node-letter{display:none}
+  .foot-in{flex-direction:column}
+  .foot-doc{text-align:left}
+}
+@media(prefers-reduced-motion:reduce){.pulse,.nav-brand,.h1-main,.conn-line::after{animation:none}}
+</style>
+</head>
+<body>
+<div class="pulse"></div>
+<nav>
+  <div class="nav-brand">CIRCUIT REPORT · NJ LOCAL</div>
+  <div class="nav-right">
+    <span class="nav-tag">Union County Plateau</span>
+    <div class="nav-dot"></div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="circuit-id">Circuit Report · Union County Plateau · Garden State Grid</div>
+  <h1>
+    <span class="h1-sub">Ways To Read</span>
+    <span class="h1-main">Summit Cranford Westfield</span>
+  </h1>
+  <p class="hero-body">Three Union County downtowns. One commuter rail line. Each producing a different model of what a walkable New Jersey town becomes when residential investment, transit access, and institutional pressure converge. <strong>Elevation. Resilience. Commercial apex.</strong> These are not equivalent places doing equivalent things. They are three answers to the same question — and the answers don't agree.</p>
+</section>
+
+<div class="connector">
+  <div class="node-pip">
+    <div class="pip-dot sum"></div>
+    <div class="pip-label sum">Summit</div>
+    <div class="pip-sub">Prestige Node<br>Hospital on the Hill</div>
+  </div>
+  <div class="conn-line"></div>
+  <div class="node-pip">
+    <div class="pip-dot cra"></div>
+    <div class="pip-label cra">Cranford</div>
+    <div class="pip-sub">River Node<br>Flood & Resilience</div>
+  </div>
+  <div class="conn-line"></div>
+  <div class="node-pip">
+    <div class="pip-dot wes"></div>
+    <div class="pip-label wes">Westfield</div>
+    <div class="pip-sub">Commercial Apex<br>Downtown Density</div>
+  </div>
+</div>
+
+<div class="cq">
+  <div class="cq-in">
+    <div>
+      <div class="cq-label">Circuit Question</div>
+      <div class="cq-sub">The anomaly<br>before the<br>reads begin</div>
+    </div>
+    <div class="cq-body">Three of Union County's most consistently cited "desirable" towns sit within a few miles of each other on the same rail corridor — yet they are regularly described in entirely different terms. Summit earns its prestige from elevation and medical infrastructure. Cranford gets named for walkability and keeps flooding. Westfield is the downtown that other NJ towns get compared to. <strong>If these three towns are all succeeding, they are succeeding at different things — and the things they are succeeding at reveal what the circuit actually rewards and what it quietly costs.</strong></div>
+  </div>
+</div>
+
+<div class="node-section">
+
+  <!-- SUMMIT -->
+  <div class="node-block" id="summit">
+    <div class="node-hdr">
+      <div class="node-letter sum">S</div>
+      <div class="node-meta">
+        <span class="node-tag">Node One · Union County · Midtown Direct · Mountain Avenue Elevation</span>
+        <h2 class="node-title sum">Summit — Prestige at Altitude</h2>
+        <span class="node-role">Overlook Hospital · NEC + Midtown Direct · High Ground Identity</span>
+      </div>
+    </div>
+
+    <div class="syn">
+      <div class="syn-label lbl-zp">Zero Point</div>
+      <div class="syn-text">Summit's downtown sits on a physical ridge that gives it literal elevation above the surrounding Passaic River valley. Overlook Medical Center — one of the region's major hospital systems — occupies a prominent position on the hill above the commercial district. The train station serves both NJ Transit's Morris &amp; Essex Lines and the Midtown Direct service to Penn Station. <strong>Summit is a town that is, in the most literal sense, above the surrounding landscape — and that physical fact has become the organizing metaphor for how the town narrates itself.</strong></div>
+    </div>
+
+    <div class="syn">
+      <div class="syn-label lbl-obs">Observed</div>
+      <div class="syn-text">Summit is consistently ranked among the wealthiest municipalities in New Jersey and among the state's most desirable places to live. The downtown on Springfield Avenue has a density of retail, dining, and service businesses unusual for a Union County borough of its size. Overlook Medical Center is a major regional employer and one of the largest healthcare facilities in northern New Jersey. The Midtown Direct rail service to Penn Station operates from Summit with a commute time competitive with many Manhattan-adjacent communities. Property values are among the highest in Union County. The school system is consistently top-ranked. The visual environment of the downtown is carefully maintained.</div>
+    </div>
+
+    <div class="syn">
+      <div class="syn-label lbl-read">Read</div>
+      <div class="syn-text">Summit's circuit role is prestige concentration. It is the node that the region uses to model what "success" looks like at the municipal scale — and that modeling function creates both advantages and costs. The advantages are obvious: high investment, maintained infrastructure, strong services. The cost is less discussed: <strong>prestige concentration tends to narrow access, making the place that represents success increasingly inaccessible to the population that can't afford to buy into it.</strong> The hospital on the hill serves the region. The housing market on the ridge serves a much narrower slice of it. That gap is Summit's structural tension, quietly present beneath the livability rankings.</div>
+    </div>
+
+    <div class="syn">
+      <div class="syn-label lbl-ex">Field Exercise</div>
+      <div class="ex-box syn-text">Walk from the Summit train station up to Overlook Medical Center, then back down to Springfield Avenue. Document the changes in housing scale, lot size, and visual presentation at each elevation increment. Then note who is on the sidewalk at each level. The physical gradient of Summit — from rail platform to hospital hilltop — is also a social gradient. Elevation in this town is not incidental to its character. It is structural.</div>
+    </div>
+
+    <div class="syn">
+      <div class="syn-label lbl-inv">Contribution Invitation</div>
+      <div class="inv-box"><strong>Counter-Orientation Asset:</strong> Document something about Summit that exists entirely below the prestige layer — the worker, the service business, the institution, the neighborhood, the population that does not appear in the livability rankings. Summit is the node that gets described. Submit what it is that doesn't get described. Tag: #SummitCircuit via @GSGrid</div>
+    </div>
+  </div>
+
+  <!-- CRANFORD -->
+  <div class="node-block" id="cranford">
+    <div class="node-hdr">
+      <div class="node-letter cra">C</div>
+      <div class="node-meta">
+        <span class="node-tag">Node Two · Union County · Rahway River · Flood Zone</span>
+        <h2 class="node-title cra">Cranford — The Town That Keeps Flooding</h2>
+        <span class="node-role">Walkability · Rahway River · Resilience Economy · Working Downtown</span>
+      </div>
+    </div>
+
+    <div class="syn">
+      <div class="syn-label lbl-zp">Zero Point</div>
+      <div class="syn-text">The Rahway River runs through the center of Cranford's downtown. In major storm events — and Cranford experiences them with notable regularity — the river overtops its banks and floods the same blocks that appear in the walkability rankings and "best downtowns" lists. <strong>Cranford is simultaneously one of the most walkable downtowns in Union County and one of the most flood-prone municipalities in the Rahway River watershed.</strong> That coexistence is not a contradiction to be explained. It is the defining fact of what Cranford is.</div>
+    </div>
+
+    <div class="syn">
+      <div class="syn-label lbl-obs">Observed</div>
+      <div class="syn-text">Cranford's downtown on North Avenue is compact, pedestrian-scaled, and dense with independent and regional businesses. The township has been consistently cited for walkability and quality of life. The Rahway River bisects the residential and commercial areas, and flooding events following major storms — including Hurricanes Irene and Ida — have caused repeated significant damage to properties across the township. Cranford participates in state and federal flood mitigation programs. Residents who have chosen to stay and rebuild after flood events are a documented and visible part of the community. The NJ Transit train station serves Midtown Direct and Morris &amp; Essex Line riders.</div>
+    </div>
+
+    <div class="syn">
+      <div class="syn-label lbl-read">Read</div>
+      <div class="syn-text">Cranford occupies the circuit's most honest position: it is a desirable place that comes with a cost that is impossible to hide, because the cost periodically covers the downtown in water. Most "desirable" NJ towns carry costs that are invisible — exclusion, inaccessibility, displacement — that don't show up in rankings or in photographs. Cranford's cost is literal and visible. <strong>What makes Cranford interesting as a circuit node is not the flooding itself but the community's repeated decision to remain, rebuild, and advocate — which is a form of municipal resilience that the places ranked above Cranford in livability lists have never been required to demonstrate.</strong></div>
+    </div>
+
+    <div class="syn">
+      <div class="syn-label lbl-ex">Field Exercise</div>
+      <div class="ex-box syn-text">Walk along the Rahway River through Cranford's downtown. Find the high water marks — the plaques, the lines on buildings, the memory that flood-prone communities maintain in the physical environment — from previous flood events. Then walk the same route and notice what has been rebuilt, what has been elevated, and what appears unchanged despite the documented risk. The walk you are taking is a record of how a community decides, repeatedly and collectively, what is worth staying for.</div>
+    </div>
+
+    <div class="syn">
+      <div class="syn-label lbl-inv">Contribution Invitation</div>
+      <div class="inv-box"><strong>Field Knowledge Asset:</strong> Document a Cranford business, institution, or residence that has flooded, been damaged, and reopened or remained. Ask — if possible — what the decision to stay looked like. Submit the observation as a record of the kind of local knowledge that walkability rankings cannot capture and climate reporting rarely preserves. Tag: #CranfordCircuit via @GSGrid</div>
+    </div>
+  </div>
+
+  <!-- WESTFIELD -->
+  <div class="node-block" id="westfield">
+    <div class="node-hdr">
+      <div class="node-letter wes">W</div>
+      <div class="node-meta">
+        <span class="node-tag">Node Three · Union County · Midtown Direct · Downtown Density Benchmark</span>
+        <h2 class="node-title wes">Westfield — The Model Town</h2>
+        <span class="node-role">Commercial Density · Elm Street Standard · The Town Others Get Compared To</span>
+      </div>
+    </div>
+
+    <div class="syn">
+      <div class="syn-label lbl-zp">Zero Point</div>
+      <div class="syn-text">Westfield's Elm Street downtown is consistently used as a benchmark when New Jersey planners, journalists, and residents describe what a successful town center looks like. It is not usually described on its own terms. It is described as the thing other places are compared to. <strong>That comparative function — being the reference point, the standard, the model — is Westfield's most interesting structural condition, and the one most rarely examined.</strong></div>
+    </div>
+
+    <div class="syn">
+      <div class="syn-label lbl-obs">Observed</div>
+      <div class="syn-text">Westfield's downtown on Elm Street has a density of retail, dining, and specialty businesses that is among the highest for any Union County municipality. The streetscape is well-maintained, pedestrian-scaled, and commercially diverse enough to sustain significant foot traffic on evenings and weekends. Midtown Direct service from the Westfield station provides competitive commute times to Penn Station. The school system is highly regarded. Property values are high and have increased significantly over the past decade. The town is frequently cited in "best of NJ" lists across multiple categories. Major retail closures that have affected other NJ downtowns have had less impact here than in comparable markets.</div>
+    </div>
+
+    <div class="syn">
+      <div class="syn-label lbl-read">Read</div>
+      <div class="syn-text">Westfield is the circuit's commercial apex — the node that has most successfully concentrated the conditions that produce a thriving downtown. But the model-town status creates an interesting perceptual problem: when a place is used as the standard, it becomes very difficult to read it on its own terms. Everyone who visits Westfield sees it through the frame of what other places are not. <strong>The result is a town that is continuously over-described as a destination and under-examined as a community.</strong> What Westfield costs its residents — in housing prices, in competitive pressure, in the particular kind of stress that comes from living inside a benchmark — is a question the coverage never asks, because the coverage is always about recommending Westfield, not reading it.</div>
+    </div>
+
+    <div class="syn">
+      <div class="syn-label lbl-ex">Field Exercise</div>
+      <div class="ex-box syn-text">Walk Elm Street on a Saturday afternoon and attempt to identify which businesses have been there for more than ten years, which have been there for two to five years, and which are new. The turnover rate of a "successful" downtown — what leaves, what replaces it, what the trend line of arrivals and departures reveals about who the street is for — is a Ways To Read of any commercial corridor. In Westfield, that exercise becomes especially interesting because the surface appearance of success can make the churn invisible.</div>
+    </div>
+
+    <div class="syn">
+      <div class="syn-label lbl-inv">Contribution Invitation</div>
+      <div class="inv-box"><strong>Local Access Asset:</strong> Find a Westfield business, institution, or community organization that serves the population of Westfield that cannot afford to live in Westfield. The workforce, the service economy, the people who make the benchmark town function without appearing in the coverage of it. Document what you find. Tag: #WestfieldCircuit via @GSGrid</div>
+    </div>
+  </div>
+
+</div>
+
+<section class="comparison">
+  <div class="comp-label">One Circuit — Three Models Of The Same Aspiration</div>
+  <div class="comp-grid">
+    <div class="comp-cell s">
+      <div class="comp-town">Summit</div>
+      <h4>Success Through Elevation</h4>
+      <p>Physical and social height as organizing principle. The hill is the metaphor. The hospital anchors the top. The platform anchors the bottom. The distance between them is the town's internal tension.</p>
+    </div>
+    <div class="comp-cell c">
+      <div class="comp-town">Cranford</div>
+      <h4>Success With a Known Cost</h4>
+      <p>The most honest node in the circuit. The desirability and the flood risk are the same place. The community that stays anyway has demonstrated something the others have not been required to demonstrate.</p>
+    </div>
+    <div class="comp-cell w">
+      <div class="comp-town">Westfield</div>
+      <h4>Success as Standard</h4>
+      <p>The benchmark that other towns get compared to. A model so successfully maintained that the question of who the model serves — and who it excludes — has become nearly impossible to ask from inside it.</p>
+    </div>
+  </div>
+</section>
+
+<div class="dynamics">
+  <div class="dyn-title">Circuit Dynamics — How The System Moves</div>
+  <div class="dyn-flow">
+    <div class="dyn-step">
+      <div class="dyn-node">Summit → Circuit</div>
+      <div class="dyn-name">Prestige Anchor</div>
+      <div class="dyn-desc">High-end residential investment and medical infrastructure set the upper bound of what Union County's plateau corridor signals to regional real estate. The ceiling shapes the floor.</div>
+    </div>
+    <div class="dyn-step">
+      <div class="dyn-node">Rahway River → Cranford</div>
+      <div class="dyn-name">Resilience Test</div>
+      <div class="dyn-desc">Climate pressure the other nodes don't face. Cranford absorbs what the river delivers and rebuilds. Each rebuild event tests the community's threshold for what the place is worth.</div>
+    </div>
+    <div class="dyn-step">
+      <div class="dyn-node">Westfield → NJ Narrative</div>
+      <div class="dyn-name">Model Export</div>
+      <div class="dyn-desc">Westfield's downtown success gets exported as a standard. Other towns are described relative to Elm Street. The benchmark travels farther than the town itself.</div>
+    </div>
+    <div class="dyn-step">
+      <div class="dyn-node">NEC → All Three</div>
+      <div class="dyn-name">Shared Infrastructure</div>
+      <div class="dyn-desc">Midtown Direct service is the common thread. Each town uses it differently. The platform is neutral. What gets built around it is not.</div>
+    </div>
+  </div>
+</div>
+
+<section class="tensions">
+  <div class="tensions-in">
+    <div class="ten-hdr">Three Tensions The Circuit Cannot Resolve</div>
+    <div class="ten-grid">
+      <div class="tension">
+        <div class="tension-label">Desirability vs Access</div>
+        <h4>The More Successful The Town, The Less Accessible It Becomes</h4>
+        <p>All three towns score well on desirability metrics. All three have experienced significant increases in residential costs over the past decade. <strong>The circuit demonstrates that the mechanisms that make a New Jersey town "work" — walkability, transit, schools, downtown quality — also price out the workforce that makes it work.</strong> That is not a local failure. It is a structural outcome of how desirability interacts with housing markets.</p>
+      </div>
+      <div class="tension">
+        <div class="tension-label">Rankings vs Reality</div>
+        <h4>Cranford Is Listed as Desirable And Floods Regularly</h4>
+        <p>The coexistence of Cranford's flood risk and its livability rankings reveals something important about how ranking systems work: they measure what is measurable and omit what is not. <strong>Climate risk does not appear in school ranking systems. Flood frequency does not appear in walkability scores. The picture the rankings produce is true and incomplete at the same time.</strong></p>
+      </div>
+      <div class="tension">
+        <div class="tension-label">The Model vs The Community</div>
+        <h4>Westfield Is Described as a Destination More Than a Town</h4>
+        <p>Model-town status creates a perceptual frame that makes the community inside the model harder to see. Westfield gets written about as a place to visit, to shop, to compare. The question of what Westfield is for the people who live there — who can no longer afford to live there, who service the town, who have been displaced by the success — <strong>is the read that model-town coverage systematically suppresses.</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="oq">
+  <div class="oq-label">Open Question</div>
+  <div class="oq-text">Summit, Cranford, and Westfield are three separate municipalities with three separate budgets, three separate governing bodies, and three very different relationships to their own geography. They share a rail corridor and a regional reputation for being among Union County's most livable places. But the circuit reveals something the reputation doesn't: <strong>these three towns are not producing the same thing. They are producing three different answers to the question of what it costs a New Jersey community to be considered successful — and the costs are distributed very differently across the three of them. No one is governing that distribution. No one has been asked to.</strong></div>
+</div>
+
+<footer>
+  <div class="foot-in">
+    <div class="foot-id">
+      Circuit Report · Summit · Cranford · Westfield<br>
+      Union County Plateau · Midtown Direct Corridor<br>
+      Circuit Thesis: Three Models of Desirability<br>
+      Garden State Grid · NJ Local · Non-Collapse Doctrine
+    </div>
+    <div class="foot-doc">
+      No Advice · No Diagnosis<br>
+      No Resolution · No Rankings<br>
+      Human Synthesis Is The Terminal Act
+    </div>
+  </div>
+</footer>
+</body>
+</html>
